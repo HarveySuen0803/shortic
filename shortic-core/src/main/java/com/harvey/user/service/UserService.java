@@ -2,6 +2,7 @@ package com.harvey.user.service;
 
 import com.harvey.user.domain.UserDo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.harvey.user.vo.UserVo;
 
 /**
  * @Author harvey
@@ -9,4 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Date 2024-05-22
  */
 public interface UserService extends IService<UserDo> {
+    UserVo getUserByName(String name);
 }

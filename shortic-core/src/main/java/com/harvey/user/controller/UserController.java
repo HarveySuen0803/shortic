@@ -3,11 +3,11 @@ package com.harvey.user.controller;
 import cn.hutool.core.util.ObjUtil;
 import com.harvey.convention.exception.ClientException;
 import com.harvey.convention.result.Result;
-import com.harvey.convention.exception.ServerException;
 import com.harvey.user.common.UserResultStatus;
 import com.harvey.user.domain.UserDo;
 import com.harvey.user.service.UserService;
 import com.harvey.user.vo.UserVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Email harveysuen0803@gmail.com
  * @Date 2024-05-22
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -32,16 +33,16 @@ public class UserController {
 
     @GetMapping("/{name}")
     public Result<UserVo> getUserByName(@PathVariable String name) {
-        UserDo userDo = userService.lambdaQuery()
-            .select(UserDo::getName, UserDo::getPhone, UserDo::getEmail)
-            .eq(UserDo::getName, name)
-            .one();
-        if (ObjUtil.isNull(userDo)) {
-            throw new ClientException(UserResultStatus.USER_NOT_FOUND);
-        }
+        UserVo userVo = userService.getUserByName(name);
         
-        UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(userDo, userVo);
+        return Result.success(userVo);
+    }
+    
+    @GetMapping("/{name}/mask")
+    public Result<UserVo> getUserMaskByName(@PathVariable String name) {
+        UserVo userVo = userService.getUserByName(name);
+        
+        userVo.mask();
         
         return Result.success(userVo);
     }
