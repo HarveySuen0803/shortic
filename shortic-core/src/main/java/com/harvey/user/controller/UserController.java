@@ -1,14 +1,9 @@
 package com.harvey.user.controller;
 
-import cn.hutool.core.util.ObjUtil;
-import com.harvey.convention.exception.ClientException;
 import com.harvey.convention.result.Result;
-import com.harvey.user.common.UserResultStatus;
-import com.harvey.user.domain.UserDo;
 import com.harvey.user.service.UserService;
 import com.harvey.user.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -3,6 +3,9 @@ package com.harvey;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @Author harvey
  * @Email harveysuen0803@gmail.com
@@ -12,10 +15,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ShorticApplicationTest {
     @Test
     public void test01() {
-        String str = "harveysuen";
+        List<String> strList = new LinkedList<>();
+        strList.add("111");
+        strList.add("222");
+        strList.add("333");
+        strList.add("444");
         
-        String[] splits = str.split("@");
-        System.out.println(splits);
-        System.out.println(splits.length);
+        
+        for (String str : strList) {
+            if (str.equals("111")) {
+                strList.remove("222");
+                strList.add("2222");
+            }
+        }
+        
+        System.out.println(strList);
     }
 }
