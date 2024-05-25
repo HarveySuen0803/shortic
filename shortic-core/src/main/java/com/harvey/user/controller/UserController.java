@@ -1,14 +1,14 @@
 package com.harvey.user.controller;
 
 import com.harvey.common.result.Result;
+import com.harvey.user.domain.UserDo;
+import com.harvey.user.dto.UserDto;
 import com.harvey.user.service.UserService;
 import com.harvey.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.BeanUtils;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author harvey
@@ -36,5 +36,15 @@ public class UserController {
         userVo.mask();
         
         return Result.success(userVo);
+    }
+    
+    @PostMapping("/{username}/mask")
+    public Result<UserVo> addUser(@RequestBody UserDto userDto) {
+        UserDo userDo = new UserDo();
+        BeanUtils.copyProperties(userDto, userDo);
+        
+        userService.save(userDo);
+        
+        return Result.SUCCESS;
     }
 }
