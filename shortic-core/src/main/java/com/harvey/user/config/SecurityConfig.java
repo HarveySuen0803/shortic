@@ -102,10 +102,14 @@ public class SecurityConfig {
         return (HttpServletRequest request, HttpServletResponse response, Authentication authentication) -> {
             UserDo userDo = (UserDo) authentication.getPrincipal();
             
+            Long userId = userDo.getId();
+            
             UserDo userDetails = new UserDo();
-            userDetails.setId(userDo.getId());
+            userDetails.setId(userId);
             userDetails.setUsername(userDo.getUsername());
             userDetails.setAuthNameSet(userDo.getAuthNameSet());
+            
+            String userDetailsJson = JSONUtil.toJsonStr(userDetails);
             
             // Todo: Add remember option
             // Long ttl = Boolean.parseBoolean(request.getParameter(ApiParamConstant.REMEMBER)) ? UserCacheKey.LOGIN_TOKEN.ttl : UserCache.LOGIN_TOKEN_S_TTL;
@@ -114,18 +118,18 @@ public class SecurityConfig {
             jwtPayload.put(JWTPayload.ISSUED_AT, DateTime.now());
             jwtPayload.put(JWTPayload.EXPIRES_AT, DateTime.now().offset(DateField.MONTH, 1));
             jwtPayload.put(JWTPayload.NOT_BEFORE, DateTime.now());
-            jwtPayload.put(UserConstant.USER_DETAILS_KEY, JSONUtil.toJsonStr(userDetails));
+            jwtPayload.put(UserConstant.USER_DETAILS_KEY, userDetailsJson);
             String token = JWTUtil.createToken(jwtPayload, UserConstant.LOGIN_TOKEN_KEY);
             
             redisTemplate.opsForValue().set(
-                UserCacheKey.LOGIN_TOKEN.getKey(userDo.getId()),
+                UserCacheKey.LOGIN_TOKEN.getKey(userId),
                 token,
                 UserCacheKey.LOGIN_TOKEN.timeout,
                 UserCacheKey.LOGIN_TOKEN.unit
             );
             
             LoginVo loginVo = new LoginVo();
-            loginVo.setUserId(userDo.getId());
+            loginVo.setUserId(userId);
             loginVo.setUsername(userDo.getUsername());
             loginVo.setToken(token);
             

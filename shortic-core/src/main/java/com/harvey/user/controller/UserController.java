@@ -3,7 +3,7 @@ package com.harvey.user.controller;
 import com.harvey.common.result.Result;
 import com.harvey.user.service.UserService;
 import com.harvey.user.vo.UserVo;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date 2024-05-22
  */
 @Slf4j
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/user/v1")
 public class UserController {
-    @Resource
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/{username}")
     public Result<UserVo> getUser(@PathVariable String username) {
