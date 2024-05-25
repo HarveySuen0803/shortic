@@ -1,7 +1,8 @@
 package com.harvey.user.service;
 
-import com.harvey.user.domain.UserDo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.harvey.user.domain.RoleDo;
+import com.harvey.user.domain.UserDo;
 import com.harvey.user.vo.UserVo;
 
 /**
@@ -9,6 +10,5 @@ import com.harvey.user.vo.UserVo;
  * @Email harveysuen0803@gmail.com
  * @Date 2024-05-22
  */
-public interface UserService extends IService<UserDo> {
-    UserVo getUser(String username);
+public interface RoleService extends IService<RoleDo> {
 }
