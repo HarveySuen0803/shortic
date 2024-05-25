@@ -28,6 +28,10 @@ public class Result<T> {
         this.data = data;
     }
     
+    public static Result success() {
+        return success(SUCCESS.code, SUCCESS.message, null);
+    }
+    
     public static <T> Result<T> success(T data) {
         return success(SUCCESS.code, SUCCESS.message, data);
     }
@@ -38,6 +42,10 @@ public class Result<T> {
     
     public static <T> Result<T> success(int code, String message, T data) {
         return new Result<>(code, message, data);
+    }
+    
+    public static Result failure() {
+        return success(FAILURE.code, FAILURE.message, null);
     }
     
     public static <T> Result<T> failure(T data) {
