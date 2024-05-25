@@ -41,7 +41,7 @@ public class ApiLogAspect {
             message = apiLog.message();
         }
         
-        if (StrUtil.isBlank(message)) {
+        if (StrUtil.isNotBlank(message)) {
             log.info("{} {}, {}#{}, {}, {}.", reqMethod, reqUri, clazzName, methodName, args, message);
         } else {
             log.info("{} {}, {}#{}, {}.", reqMethod, reqUri, clazzName, methodName, args);
