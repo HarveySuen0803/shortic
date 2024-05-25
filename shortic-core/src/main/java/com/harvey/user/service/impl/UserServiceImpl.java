@@ -8,6 +8,7 @@ import com.harvey.user.domain.*;
 import com.harvey.user.mapper.UserMapper;
 import com.harvey.user.service.*;
 import com.harvey.user.vo.UserVo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,18 +27,15 @@ import java.util.stream.Collectors;
  * @Date 2024-05-22
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements UserService, UserDetailsService {
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
     
-    @Autowired
-    private UserRoleService userRoleService;
+    private final UserRoleService userRoleService;
     
-    @Autowired
-    private UserAuthService userAuthService;
+    private final UserAuthService userAuthService;
     
-    @Autowired
-    private RoleAuthService roleAuthService;
+    private final RoleAuthService roleAuthService;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -73,11 +71,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
             .in(AuthDo::getId, authIdSet)
             .list();
 
-        Set<String> authNameList = authDolist.stream()
+        Set<String> authNameSet = authDolist.stream()
             .map(AuthDo::getName)
             .collect(Collectors.toSet());
 
-        return authNameList;
+        return authNameSet;
     }
 
     /**
@@ -129,10 +127,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         if (ObjUtil.isNull(userDo)) {
             throw new ClientException(UserResult.USER_NOT_FOUND);
         }
-        
+
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(userDo, userVo);
-        
+
         return userVo;
     }
 }
