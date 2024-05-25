@@ -8,6 +8,8 @@ import com.harvey.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -36,15 +38,5 @@ public class UserController {
         userVo.mask();
         
         return Result.success(userVo);
-    }
-    
-    @PostMapping("/{username}/mask")
-    public Result<UserVo> addUser(@RequestBody UserDto userDto) {
-        UserDo userDo = new UserDo();
-        BeanUtils.copyProperties(userDto, userDo);
-        
-        userService.save(userDo);
-        
-        return Result.SUCCESS;
     }
 }
