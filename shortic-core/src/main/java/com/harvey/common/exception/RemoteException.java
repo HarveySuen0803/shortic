@@ -1,6 +1,6 @@
-package com.harvey.convention.exception;
+package com.harvey.common.exception;
 
-import com.harvey.convention.result.ResultStatus;
+import com.harvey.common.result.Result;
 
 /**
  * @Author harvey
@@ -16,11 +16,11 @@ public class RemoteException extends BaseException {
         super(code, message, cause);
     }
     
-    public RemoteException(ResultStatus resultStatus) {
-        super(resultStatus);
+    public <T> RemoteException(Result<T> result) {
+        super(result);
     }
     
-    public RemoteException(ResultStatus resultStatus, Throwable cause) {
-        super(resultStatus, cause);
+    public <T> RemoteException(Result<T> result, Throwable cause) {
+        super(result, cause);
     }
 }

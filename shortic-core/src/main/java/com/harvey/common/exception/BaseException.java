@@ -1,6 +1,6 @@
-package com.harvey.convention.exception;
+package com.harvey.common.exception;
 
-import com.harvey.convention.result.ResultStatus;
+import com.harvey.common.result.Result;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,11 +28,11 @@ public class BaseException extends RuntimeException {
         this.message = message;
     }
     
-    public BaseException(ResultStatus resultStatus) {
-        this(resultStatus.getCode(), resultStatus.getMessage());
+    public <T> BaseException(Result<T> result) {
+        this(result.getCode(), result.getMessage());
     }
     
-    public BaseException(ResultStatus resultStatus, Throwable cause) {
-        this(resultStatus.getCode(), resultStatus.getMessage(), cause);
+    public <T> BaseException(Result<T> result, Throwable cause) {
+        this(result.getCode(), result.getMessage(), cause);
     }
 }
