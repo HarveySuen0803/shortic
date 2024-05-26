@@ -8,7 +8,9 @@ import com.harvey.common.http.HttpUri;
  * @Date 2024-05-24
  */
 public class UserHttpUri extends HttpUri {
-    public static final String LOGIN = "/login";
+    public static final String LOGIN = "/api/user/v1/login";
     
-    public static final String LOGOUT = "/logout";
+    public static final String LOGOUT = "/api/user/v1/logout";
+    
+    public static final String REGISTER = "/api/user/v1/register";
 }
