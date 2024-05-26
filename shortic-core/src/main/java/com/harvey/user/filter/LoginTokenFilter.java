@@ -76,9 +76,6 @@ public class LoginTokenFilter extends OncePerRequestFilter {
             redisTemplate.expire(loginTokenCacheKey, UserCacheKey.LOGIN_TOKEN.timeout, UserCacheKey.LOGIN_TOKEN.unit);
         });
         
-        System.out.println(SecurityContextHolder.getContext());
-        System.out.println(SecurityContextHolder.getContext().getAuthentication());
-        
         // If the user is not authenticated, then authenticate the user.
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             SecurityContextHolder.getContext()
