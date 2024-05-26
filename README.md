@@ -5,13 +5,21 @@
   <h3>Harvey's Awesome Chat Server</h3>
 </div>
 
-# Quick Start
+# Preparing MySQL environment
 
-Preparing the MySQL environment.
-
-1. Start Mysql container.
+Start Mysql container.
 
 ```shell
+docker volume create shortic-mysql-conf
+docker volume create shortic-mysql-data
+docker volume create shortic-mysql-logs
+
+sudo mkdir -p /opt/mysql
+
+ln -s /var/lib/docker/volumes/shortic-mysql-conf/_data /opt/mysql/conf
+ln -s /var/lib/docker/volumes/shortic-mysql-data/_data /opt/mysql/data
+ln -s /var/lib/docker/volumes/shortic-mysql-logs/_data /opt/mysql/logs
+
 docker container run \
     --name shortic-mysql \
     --privileged \
@@ -23,16 +31,22 @@ docker container run \
     -d mysql:8.1.0
 ```
 
-Preparing the Redis environment.
+Import shortic/shortic-resource/shortic-db.sql into the database.
 
-1. Download the Redis configuration file.
+```shell
+mysql -h127.0.0.1 -uroot -p111 shortic < shortic.sql
+```
+
+# Preparing Redis environment
+
+Download the Redis configuration file.
 
 ```shell
 curl -LJO http://download.redis.io/redis-stable/redis.conf
 mv ./redis.conf /opt/redis/conf
 ```
 
-2Modify the Redis configuration file
+Modify the Redis configuration file.
 
 ```
 # run as a daemon in background
@@ -51,7 +65,7 @@ requirepass 111
 appendonly yes
 ```
 
-3. Start Redis container.
+Start Redis container.
 
 ```shell
 docker volume create shortic-redis-conf
