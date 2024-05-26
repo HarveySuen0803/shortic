@@ -44,14 +44,14 @@ public class LoginTokenFilter extends OncePerRequestFilter {
         }
         
         // If the request header does not carry Login Token.
-        String loginToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (StrUtil.isBlank(loginToken)) {
+        String loginTokenStr = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (StrUtil.isBlank(loginTokenStr)) {
             ResponseUtil.write(response, Result.UNAUTHORIZED);
             return;
         }
         
         // If the token is invalid or expired.
-        JWT loginTokenJwt = JWT.of(loginToken).setKey(UserConstant.LOGIN_TOKEN_KEY);
+        JWT loginTokenJwt = JWT.of(loginTokenStr).setKey(UserConstant.LOGIN_TOKEN_KEY);
         if (!loginTokenJwt.verify() || !loginTokenJwt.validate(0)) {
             ResponseUtil.write(response, Result.UNAUTHORIZED);
             return;
@@ -63,9 +63,17 @@ public class LoginTokenFilter extends OncePerRequestFilter {
         
         Long userId = userDetails.getId();
         
+        String loginTokenCacheKey = UserCacheKey.LOGIN_TOKEN.getKey(userId);
+        
+        String loginTokenStrCache = (String) redisTemplate.opsForValue().get(loginTokenCacheKey);
+        if (!loginTokenStr.equals(loginTokenStrCache)) {
+            ResponseUtil.write(response, Result.UNAUTHORIZED);
+            return;
+        }
+        
         // Todo: Optimize token renewal strategy
         threadPoolTaskExecutor.execute(() -> {
-            redisTemplate.expire(UserCacheKey.LOGIN_TOKEN.getKey(userId), UserCacheKey.LOGIN_TOKEN.timeout, UserCacheKey.LOGIN_TOKEN.unit);
+            redisTemplate.expire(loginTokenCacheKey, UserCacheKey.LOGIN_TOKEN.timeout, UserCacheKey.LOGIN_TOKEN.unit);
         });
         
         System.out.println(SecurityContextHolder.getContext());
