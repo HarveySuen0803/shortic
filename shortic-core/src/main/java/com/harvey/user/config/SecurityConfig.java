@@ -13,6 +13,7 @@ import com.harvey.user.cache.UserCacheKey;
 import com.harvey.user.constant.UserConstant;
 import com.harvey.user.domain.UserDo;
 import com.harvey.user.filter.LoginTokenFilter;
+import com.harvey.user.http.UserHttpUri;
 import com.harvey.user.result.UserResult;
 import com.harvey.user.vo.LoginVo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,12 +66,12 @@ public class SecurityConfig {
         AccessDeniedHandler accessDeniedHandler
     ) throws Exception {
         httpSecurity.authorizeHttpRequests((authorize) -> {
-            authorize.requestMatchers("/login", "/logout").permitAll()
+            authorize.requestMatchers(UserHttpUri.LOGIN, UserHttpUri.LOGOUT, UserHttpUri.REGISTER).permitAll()
                 .anyRequest().authenticated();
         });
         
         httpSecurity.formLogin((formLogin) -> {
-            formLogin.loginProcessingUrl("/login")
+            formLogin.loginProcessingUrl(UserHttpUri.LOGIN)
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(authenticationSuccessHandler)
@@ -78,7 +79,7 @@ public class SecurityConfig {
         });
         
         httpSecurity.logout((logout) -> {
-            logout.logoutUrl("/logout")
+            logout.logoutUrl(UserHttpUri.LOGOUT)
                 .addLogoutHandler(logoutHandler)
                 .logoutSuccessHandler(logoutSuccessHandler);
         });
@@ -150,16 +151,17 @@ public class SecurityConfig {
     @Bean
     public LogoutHandler logoutHandler(RedisTemplate redisTemplate) {
         return (HttpServletRequest request, HttpServletResponse response, Authentication authentication) -> {
-            JWT tokenJwt = JWT.of(request.getHeader(HttpHeaders.AUTHORIZATION)).setKey(UserConstant.LOGIN_TOKEN_KEY);
+            JWT loginTokenJwt = JWT.of(request.getHeader(HttpHeaders.AUTHORIZATION)).setKey(UserConstant.LOGIN_TOKEN_KEY);
             
             // If the token is invalid or expired.
-            if (!tokenJwt.verify() || !tokenJwt.validate(0)) {
+            if (!loginTokenJwt.verify() || !loginTokenJwt.validate(0)) {
                 ResponseUtil.write(response, UserResult.LOGIN_TOKEN_EXPIRED);
                 return;
             }
             
             // Get user info from token.
-            UserDo userDetails = JSONUtil.toBean(tokenJwt.getPayload(UserConstant.USER_DETAILS_KEY).toString(), UserDo.class);
+            String userDetailsJson = loginTokenJwt.getPayload(UserConstant.USER_DETAILS_KEY).toString();
+            UserDo userDetails = JSON.parseObject(userDetailsJson, UserDo.class);
             
             redisTemplate.delete(UserCacheKey.LOGIN_TOKEN.getKey(userDetails.getId()));
         };

@@ -1,6 +1,6 @@
 package com.harvey.common.http;
 
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
 import com.harvey.common.result.Result;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -15,7 +15,7 @@ public class ResponseUtil {
     public static <T> void write(HttpServletResponse response, Result<T> result) {
         try {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-            response.getWriter().write(JSONUtil.toJsonStr(result));
+            response.getWriter().write(JSON.toJSONString(result));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
