@@ -10,7 +10,8 @@ import com.harvey.user.service.*;
 import com.harvey.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -49,8 +50,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         Long userId = userDo.getId();
 
         Set<String> authNameSet = getAuthNameSet(userId);
-
-        userDo.setAuthNameSet(authNameSet);
+        
+        // Convert AuthName to SimpleGrantedAuthority, Convert AuthNameSet to Authorities.
+        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(authNameSet);
+        userDo.setAuthorities(authorities);
 
         return userDo;
     }
