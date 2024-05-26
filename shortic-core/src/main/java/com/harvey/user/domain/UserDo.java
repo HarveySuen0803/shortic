@@ -4,7 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -52,28 +51,10 @@ public class UserDo implements Serializable, UserDetails {
     private Integer isEnabled;
     
     @TableField(exist = false)
-    private Set<String> authNameSet;
+    private Collection<? extends GrantedAuthority> authorities;
 
     @Serial
     private static final long serialVersionUID = 1L;
-    
-    @Override
-    @JsonIgnore
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.createAuthorityList(authNameSet);
-    }
-    
-    @Override
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
-    
-    @Override
-    @JsonIgnore
-    public String getUsername() {
-        return username;
-    }
     
     @Override
     @JsonIgnore

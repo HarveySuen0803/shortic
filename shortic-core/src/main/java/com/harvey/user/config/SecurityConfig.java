@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
+import com.alibaba.fastjson2.JSON;
 import com.harvey.common.http.ResponseUtil;
 import com.harvey.common.result.Result;
 import com.harvey.user.cache.UserCacheKey;
@@ -107,9 +108,9 @@ public class SecurityConfig {
             UserDo userDetails = new UserDo();
             userDetails.setId(userId);
             userDetails.setUsername(userDo.getUsername());
-            userDetails.setAuthNameSet(userDo.getAuthNameSet());
+            userDetails.setAuthorities(userDo.getAuthorities());
             
-            String userDetailsJson = JSONUtil.toJsonStr(userDetails);
+            String userDetailsJson = JSON.toJSONString(userDetails);
             
             // Todo: Add remember option
             // Long ttl = Boolean.parseBoolean(request.getParameter(ApiParamConstant.REMEMBER)) ? UserCacheKey.LOGIN_TOKEN.ttl : UserCache.LOGIN_TOKEN_S_TTL;

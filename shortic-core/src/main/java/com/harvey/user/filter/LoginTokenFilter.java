@@ -3,6 +3,7 @@ package com.harvey.user.filter;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.jwt.JWT;
+import com.alibaba.fastjson2.JSON;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.http.ResponseUtil;
 import com.harvey.common.result.Result;
@@ -57,7 +58,8 @@ public class LoginTokenFilter extends OncePerRequestFilter {
         }
         
         // Get user info from token.
-        UserDo userDetails = JSONUtil.toBean(loginTokenJwt.getPayload("userDetails").toString(), UserDo.class);
+        String userDetailsJson = loginTokenJwt.getPayload(UserConstant.USER_DETAILS_KEY).toString();
+        UserDo userDetails = JSON.parseObject(userDetailsJson, UserDo.class);
         
         Long userId = userDetails.getId();
         
@@ -65,6 +67,9 @@ public class LoginTokenFilter extends OncePerRequestFilter {
         threadPoolTaskExecutor.execute(() -> {
             redisTemplate.expire(UserCacheKey.LOGIN_TOKEN.getKey(userId), UserCacheKey.LOGIN_TOKEN.timeout, UserCacheKey.LOGIN_TOKEN.unit);
         });
+        
+        System.out.println(SecurityContextHolder.getContext());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
         
         // If the user is not authenticated, then authenticate the user.
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
