@@ -1,10 +1,16 @@
 package com.harvey;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
+import com.harvey.user.domain.UserDo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author harvey
@@ -13,22 +19,4 @@ import java.util.List;
  */
 @SpringBootTest
 public class ShorticApplicationTest {
-    @Test
-    public void test01() {
-        List<String> strList = new LinkedList<>();
-        strList.add("111");
-        strList.add("222");
-        strList.add("333");
-        strList.add("444");
-        
-        
-        for (String str : strList) {
-            if (str.equals("111")) {
-                strList.remove("222");
-                strList.add("2222");
-            }
-        }
-        
-        System.out.println(strList);
-    }
 }
