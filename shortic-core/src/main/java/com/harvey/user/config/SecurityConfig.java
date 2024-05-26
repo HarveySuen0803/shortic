@@ -1,8 +1,6 @@
 package com.harvey.user.config;
 
-import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
-import cn.hutool.json.JSONUtil;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
@@ -110,15 +108,11 @@ public class SecurityConfig {
             userDetails.setId(userId);
             userDetails.setUsername(userDo.getUsername());
             userDetails.setAuthorities(userDo.getAuthorities());
-            
             String userDetailsJson = JSON.toJSONString(userDetails);
-            
-            // Todo: Add remember option
-            // Long ttl = Boolean.parseBoolean(request.getParameter(ApiParamConstant.REMEMBER)) ? UserCacheKey.LOGIN_TOKEN.ttl : UserCache.LOGIN_TOKEN_S_TTL;
             
             HashMap<String, Object> jwtPayload = new HashMap<>();
             jwtPayload.put(JWTPayload.ISSUED_AT, DateTime.now());
-            jwtPayload.put(JWTPayload.EXPIRES_AT, DateTime.now().offset(DateField.MONTH, 1));
+            jwtPayload.put(JWTPayload.EXPIRES_AT, DateTime.now().offset(UserConstant.LOGIN_TOKEN_TIMEOUT_UNIT, UserConstant.LOGIN_TOKEN_TIMEOUT));
             jwtPayload.put(JWTPayload.NOT_BEFORE, DateTime.now());
             jwtPayload.put(UserConstant.USER_DETAILS_KEY, userDetailsJson);
             String token = JWTUtil.createToken(jwtPayload, UserConstant.LOGIN_TOKEN_KEY);

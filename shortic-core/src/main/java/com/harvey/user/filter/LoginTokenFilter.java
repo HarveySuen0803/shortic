@@ -1,17 +1,14 @@
 package com.harvey.user.filter;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import cn.hutool.jwt.JWT;
 import com.alibaba.fastjson2.JSON;
-import com.harvey.common.exception.ClientException;
 import com.harvey.common.http.ResponseUtil;
 import com.harvey.common.result.Result;
 import com.harvey.user.cache.UserCacheKey;
 import com.harvey.user.constant.UserConstant;
 import com.harvey.user.domain.UserDo;
 import com.harvey.user.http.UserHttpUri;
-import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
