@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
  * @Date 2024-05-24
  */
 public class UserCacheKey extends CacheKey {
+    public static final CacheKey USER_ID_BLOOM_FILTER = new CacheKey("user:bloomfilter:use_id:", null, null);
+    
     public static final CacheKey LOGIN_TOKEN = new CacheKey("user:token:login:%s", 60 * 24 * 7L, TimeUnit.MINUTES);
     
     public static final CacheKey LIST = new CacheKey("user:list", 60 * 24 * 7L, TimeUnit.MINUTES);

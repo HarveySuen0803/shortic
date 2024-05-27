@@ -9,6 +9,7 @@ import com.harvey.user.result.UserResult;
 import com.harvey.user.service.UserService;
 import com.harvey.user.vo.UserVo;
 import jakarta.annotation.Resource;
+import org.redisson.api.RBloomFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,9 +30,12 @@ public class UserController {
     @Resource
     private PasswordEncoder passwordEncoder;
     
+    @Resource(name = "userBloomFilter")
+    private RBloomFilter userBloomFilter;
+    
     @PostMapping("/api/user/v1/register")
     public Result<Void> register(UserRegisterDto userRegisterDto) {
-        boolean isUserExist = userService.isUserExists(userRegisterDto.getUsername(), userRegisterDto.getUsername());
+        boolean isUserExist = userService.isUserExists(userRegisterDto.getUsername(), userRegisterDto.getEmail());
         if (isUserExist) {
             throw new ClientException(UserResult.USER_EXISTS);
         }
@@ -43,6 +47,10 @@ public class UserController {
         userDo.setPassword(encodedPassword);
         
         userService.save(userDo);
+        
+        System.out.println(userDo);
+        
+        userBloomFilter.add(userDo.getId());
         
         return Result.success();
     }

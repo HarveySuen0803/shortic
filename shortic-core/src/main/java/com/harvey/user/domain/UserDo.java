@@ -1,20 +1,16 @@
 package com.harvey.user.domain;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Collection;
 
 /**
  * @Author harvey
@@ -24,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 @TableName("t_user")
 public class UserDo implements Serializable, UserDetails {
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     private String username;
