@@ -1,22 +1,18 @@
 package com.harvey.user.controller;
 
-import cn.hutool.core.date.DateTime;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.user.domain.UserDo;
 import com.harvey.user.dto.UserRegisterDto;
-import com.harvey.user.mapper.UserMapper;
 import com.harvey.user.result.UserResult;
 import com.harvey.user.service.UserService;
 import com.harvey.user.vo.UserVo;
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 /**
  * @Author harvey
@@ -26,12 +22,13 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/user/v1")
 @PreAuthorize("hasAuthority('USER_R')")
-@RequiredArgsConstructor
 @EnableMethodSecurity
 public class UserController {
-    private final UserService userService;
+    @Resource
+    private UserService userService;
     
-    private final PasswordEncoder passwordEncoder;
+    @Resource
+    private PasswordEncoder passwordEncoder;
     
     @PostMapping("/register")
     public Result<Void> register(UserRegisterDto userRegisterDto) {
