@@ -11,4 +11,10 @@ import com.harvey.user.vo.UserVo;
  */
 public interface UserService extends IService<UserDo> {
     UserVo getUser(String username);
+    
+    boolean isUserExists(String username, String email);
+    
+    boolean isUsernameExists(String username);
+    
+    boolean isEmailExists(String email);
 }

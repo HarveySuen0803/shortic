@@ -136,4 +136,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
 
         return userVo;
     }
+    
+    @Override
+    public boolean isUserExists(String username, String email) {
+        return isUsernameExists(username) || isEmailExists(email);
+    }
+    
+    @Override
+    public boolean isUsernameExists(String username) {
+        boolean isExists = lambdaQuery()
+            .eq(UserDo::getUsername, username)
+            .exists();
+        
+        return isExists;
+    }
+    
+    @Override
+    public boolean isEmailExists(String email) {
+        boolean isExists = lambdaQuery()
+            .eq(UserDo::getEmail, email)
+            .exists();
+        
+        return isExists;
+    }
 }
