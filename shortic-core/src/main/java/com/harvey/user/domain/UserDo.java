@@ -2,10 +2,12 @@ package com.harvey.user.domain;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -30,14 +32,18 @@ public class UserDo implements Serializable, UserDetails {
 
     private String email;
 
+    @TableField(fill = FieldFill.INSERT)
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private LocalDateTime createTime;
     
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
     
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+    private LocalDateTime updateTime;
     
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
 
     private Integer isAccountNoExpired;
