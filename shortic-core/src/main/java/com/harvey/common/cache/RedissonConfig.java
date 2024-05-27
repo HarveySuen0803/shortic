@@ -22,11 +22,4 @@ public class RedissonConfig {
             .setPassword("111");
         return Redisson.create(config);
     }
-    
-    @Bean
-    public RBloomFilter bloomFilter(RedissonClient redissonClient) {
-        RBloomFilter<String> bloomFilter = redissonClient.getBloomFilter("redissonBloomFilter");
-        bloomFilter.tryInit(100000000, 0.01);
-        return bloomFilter;
-    }
 }
