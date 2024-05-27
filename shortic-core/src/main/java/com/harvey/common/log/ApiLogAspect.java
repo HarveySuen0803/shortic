@@ -3,8 +3,8 @@ package com.harvey.common.log;
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.StrUtil;
 import com.harvey.common.http.HttpServletRequestProvider;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,9 +20,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
-@RequiredArgsConstructor
 public class ApiLogAspect {
-    private final HttpServletRequestProvider httpServletRequestProvider;
+    @Resource
+    private HttpServletRequestProvider httpServletRequestProvider;
     
     @Around("execution(* com.harvey..controller..*(..))")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {

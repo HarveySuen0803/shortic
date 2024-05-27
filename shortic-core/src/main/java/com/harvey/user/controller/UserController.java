@@ -1,15 +1,18 @@
 package com.harvey.user.controller;
 
+import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
+import com.harvey.user.domain.UserDo;
+import com.harvey.user.dto.UserRegisterDto;
+import com.harvey.user.result.UserResult;
 import com.harvey.user.service.UserService;
 import com.harvey.user.vo.UserVo;
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author harvey
@@ -19,10 +22,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user/v1")
 @PreAuthorize("hasAuthority('USER_R')")
-@RequiredArgsConstructor
 @EnableMethodSecurity
 public class UserController {
-    private final UserService userService;
+    @Resource
+    private UserService userService;
+    
+    @Resource
+    private PasswordEncoder passwordEncoder;
+    
+    @PostMapping("/register")
+    public Result<Void> register(UserRegisterDto userRegisterDto) {
+        boolean isUserExist = userService.isUserExists(userRegisterDto.getUsername(), userRegisterDto.getUsername());
+        if (isUserExist) {
+            throw new ClientException(UserResult.USER_EXISTS);
+        }
+        
+        UserDo userDo = new UserDo();
+        BeanUtils.copyProperties(userRegisterDto, userDo);
+        
+        String password = userDo.getPassword();
+        String encodedPassword = passwordEncoder.encode(password);
+        userDo.setPassword(encodedPassword);
+        
+        userService.save(userDo);
+        
+        return Result.success();
+    }
 
     @GetMapping("/{username}")
     public Result<UserVo> getUser(@PathVariable String username) {

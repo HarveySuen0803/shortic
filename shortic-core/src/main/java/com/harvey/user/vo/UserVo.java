@@ -12,21 +12,10 @@ import lombok.Data;
 public class UserVo {
     private String username;
     
-    private String phone;
-    
     private String email;
     
     public void mask() {
         maskEmail();
-        maskPhone();
-    }
-    
-    public void maskPhone() {
-        if (phone.length() != 11) {
-            return;
-        }
-        
-        phone = phone.substring(0, 3) + "****" + phone.substring(7, 11);
     }
     
     public void maskEmail() {

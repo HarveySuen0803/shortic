@@ -3,12 +3,12 @@ package com.harvey.user.service.impl;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.exception.ClientException;
-import com.harvey.user.result.UserResult;
 import com.harvey.user.domain.*;
 import com.harvey.user.mapper.UserMapper;
+import com.harvey.user.result.UserResult;
 import com.harvey.user.service.*;
 import com.harvey.user.vo.UserVo;
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -28,15 +28,18 @@ import java.util.stream.Collectors;
  * @Date 2024-05-22
  */
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements UserService, UserDetailsService {
-    private final AuthService authService;
+    @Resource
+    private AuthService authService;
     
-    private final UserRoleService userRoleService;
+    @Resource
+    private UserRoleService userRoleService;
     
-    private final UserAuthService userAuthService;
+    @Resource
+    private UserAuthService userAuthService;
     
-    private final RoleAuthService roleAuthService;
+    @Resource
+    private RoleAuthService roleAuthService;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -124,7 +127,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     @Override
     public UserVo getUser(String username) {
         UserDo userDo = lambdaQuery()
-            .select(UserDo::getUsername, UserDo::getPhone, UserDo::getEmail)
+            .select(UserDo::getUsername, UserDo::getEmail)
             .eq(UserDo::getUsername, username)
             .one();
         if (ObjUtil.isNull(userDo)) {
@@ -135,5 +138,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         BeanUtils.copyProperties(userDo, userVo);
 
         return userVo;
+    }
+    
+    @Override
+    public boolean isUserExists(String username, String email) {
+        return isUsernameExists(username) || isEmailExists(email);
+    }
+    
+    @Override
+    public boolean isUsernameExists(String username) {
+        boolean isExists = lambdaQuery()
+            .eq(UserDo::getUsername, username)
+            .exists();
+        
+        return isExists;
+    }
+    
+    @Override
+    public boolean isEmailExists(String email) {
+        boolean isExists = lambdaQuery()
+            .eq(UserDo::getEmail, email)
+            .exists();
+        
+        return isExists;
     }
 }
