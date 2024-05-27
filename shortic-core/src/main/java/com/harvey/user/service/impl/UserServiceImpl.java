@@ -124,7 +124,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     @Override
     public UserVo getUser(String username) {
         UserDo userDo = lambdaQuery()
-            .select(UserDo::getUsername, UserDo::getPhone, UserDo::getEmail)
+            .select(UserDo::getUsername, UserDo::getEmail)
             .eq(UserDo::getUsername, username)
             .one();
         if (ObjUtil.isNull(userDo)) {

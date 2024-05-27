@@ -28,8 +28,6 @@ public class UserDo implements Serializable, UserDetails {
 
     private String password;
 
-    private String phone;
-
     private String email;
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
