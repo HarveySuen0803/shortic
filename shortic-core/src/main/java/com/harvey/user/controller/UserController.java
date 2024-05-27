@@ -13,6 +13,7 @@ import org.redisson.api.RBloomFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,6 +34,7 @@ public class UserController {
     @Resource(name = "userBloomFilter")
     private RBloomFilter userBloomFilter;
     
+    @Transactional
     @PostMapping("/api/user/v1/register")
     public Result<Void> register(UserRegisterDto userRegisterDto) {
         boolean isUserExist = userService.isUserExists(userRegisterDto.getUsername(), userRegisterDto.getEmail());
