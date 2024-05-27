@@ -34,7 +34,7 @@ docker container run \
 Import shortic/shortic-resource/shortic-db.sql into the database.
 
 ```shell
-mysql -h127.0.0.1 -uroot -p111 shortic < shortic.sql
+mysql -h127.0.0.1 -uroot -p111 shortic < shortic-db.sql
 ```
 
 # Preparing Redis environment

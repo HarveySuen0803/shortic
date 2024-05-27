@@ -26,7 +26,6 @@ CREATE TABLE `t_user` (
   `id` bigint NOT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `phone` varchar(15) DEFAULT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `create_by` bigint DEFAULT NULL,
@@ -36,7 +35,9 @@ CREATE TABLE `t_user` (
   `is_account_no_expired` tinyint(1) DEFAULT '1',
   `is_credentials_no_expired` tinyint(1) DEFAULT '1',
   `is_account_no_locked` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -46,7 +47,7 @@ CREATE TABLE `t_user` (
 
 LOCK TABLES `t_user` WRITE;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
-INSERT INTO `t_user` VALUES (1,'harvey','$2a$10$3jJ34og5olLXX9AIRgcG9.OvKt9OWbjufzh5tG9TiftGV.u1/gsMW','13101950291','harveysuen0803@gmail.com','2024-05-22 14:11:23',1,'2024-05-22 14:11:29',1,1,1,1,1);
+INSERT INTO `t_user` VALUES (1,'harvey','$2a$10$3jJ34og5olLXX9AIRgcG9.OvKt9OWbjufzh5tG9TiftGV.u1/gsMW','harvey@gmail.com','2024-05-22 14:11:23',1,'2024-05-22 14:11:29',1,1,1,1,1);
 /*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-26 19:26:50
+-- Dump completed on 2024-05-27 13:08:01
