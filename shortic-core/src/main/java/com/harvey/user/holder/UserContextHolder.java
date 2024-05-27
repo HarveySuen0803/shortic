@@ -1,4 +1,4 @@
-package com.harvey.user.cache.holder;
+package com.harvey.user.holder;
 
 import com.harvey.user.domain.UserDo;
 import org.springframework.security.core.Authentication;

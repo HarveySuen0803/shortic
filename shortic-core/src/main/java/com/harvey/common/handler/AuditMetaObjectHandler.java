@@ -1,7 +1,7 @@
 package com.harvey.common.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.harvey.user.cache.holder.UserContextHolder;
+import com.harvey.user.holder.UserContextHolder;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
