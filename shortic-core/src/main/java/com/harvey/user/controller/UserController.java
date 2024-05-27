@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2024-05-22
  */
 @RestController
-@RequestMapping("/api/user/v1")
 @PreAuthorize("hasAuthority('USER_R')")
 @EnableMethodSecurity
 public class UserController {
@@ -30,7 +29,7 @@ public class UserController {
     @Resource
     private PasswordEncoder passwordEncoder;
     
-    @PostMapping("/register")
+    @PostMapping("/api/user/v1/register")
     public Result<Void> register(UserRegisterDto userRegisterDto) {
         boolean isUserExist = userService.isUserExists(userRegisterDto.getUsername(), userRegisterDto.getUsername());
         if (isUserExist) {
@@ -48,14 +47,14 @@ public class UserController {
         return Result.success();
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/api/user/v1/{username}")
     public Result<UserVo> getUser(@PathVariable String username) {
         UserVo userVo = userService.getUser(username);
         
         return Result.success(userVo);
     }
     
-    @GetMapping("/{username}/mask")
+    @GetMapping("/api/user/v1/{username}/mask")
     public Result<UserVo> getUserMask(@PathVariable String username) {
         UserVo userVo = userService.getUser(username);
         
