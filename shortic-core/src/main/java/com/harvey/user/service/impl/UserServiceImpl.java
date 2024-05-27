@@ -1,5 +1,6 @@
 package com.harvey.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.exception.ClientException;
@@ -9,7 +10,6 @@ import com.harvey.user.result.UserResult;
 import com.harvey.user.service.*;
 import com.harvey.user.vo.UserVo;
 import jakarta.annotation.Resource;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -134,8 +134,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
             throw new ClientException(UserResult.USER_NOT_FOUND);
         }
 
-        UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(userDo, userVo);
+        UserVo userVo = BeanUtil.copyProperties(userDo, UserVo.class);
 
         return userVo;
     }

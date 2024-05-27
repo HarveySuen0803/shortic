@@ -1,5 +1,6 @@
 package com.harvey.user.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.user.domain.UserDo;
@@ -8,7 +9,6 @@ import com.harvey.user.result.UserResult;
 import com.harvey.user.service.UserService;
 import com.harvey.user.vo.UserVo;
 import jakarta.annotation.Resource;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,8 +37,7 @@ public class UserController {
             throw new ClientException(UserResult.USER_EXISTS);
         }
         
-        UserDo userDo = new UserDo();
-        BeanUtils.copyProperties(userRegisterDto, userDo);
+        UserDo userDo = BeanUtil.copyProperties(userRegisterDto, UserDo.class);
         
         String password = userDo.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
