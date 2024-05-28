@@ -11,20 +11,14 @@ import lombok.Data;
  * @Date 2024-05-28
  */
 @Data
-public class GroupUpdateDto {
-    private String gid;
-    
+public class GroupAddDto {
     private String name;
     
-    public GroupUpdateDto(String gid, String name) {
-        if (StrUtil.isBlank(gid)) {
-            throw new ClientException(GroupResult.GID_INVALID);
-        }
+    public GroupAddDto(String name) {
         if (StrUtil.isBlank(name)) {
             throw new ClientException(GroupResult.NAME_INVALID);
         }
         
-        this.gid = gid;
         this.name = name;
     }
 }

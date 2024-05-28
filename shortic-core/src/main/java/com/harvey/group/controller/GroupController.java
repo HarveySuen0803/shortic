@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.group.entity.domain.GroupDo;
+import com.harvey.group.entity.dto.GroupAddDto;
 import com.harvey.group.entity.dto.GroupUpdateDto;
 import com.harvey.group.entity.vo.GroupVo;
 import com.harvey.group.result.GroupResult;
@@ -28,10 +29,8 @@ public class GroupController {
     
     @Transactional
     @PostMapping("/api/group/v1")
-    public Result<Void> addGroup(String name) {
-        if (StrUtil.isBlank(name)) {
-            throw new ClientException(GroupResult.NAME_INVALID);
-        }
+    public Result<Void> addGroup(@RequestBody GroupAddDto groupAddDto) {
+        String name = groupAddDto.getName();
         
         Long userId = UserContextHolder.getUserId();
         
