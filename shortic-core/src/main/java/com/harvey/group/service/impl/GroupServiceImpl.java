@@ -20,6 +20,17 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDo> implemen
     }
     
     @Override
+    public String genUniqueGid(Long userId) {
+        String gid = genGid();
+        
+        while (isKeyExisted(gid, userId)) {
+            gid = genGid();
+        }
+        
+        return gid;
+    }
+    
+    @Override
     public boolean isKeyExisted(String gid, Long userId) {
         boolean isExisted = lambdaQuery()
             .eq(GroupDo::getGid, gid)

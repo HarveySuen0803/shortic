@@ -11,5 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface GroupService extends IService<GroupDo> {
     String genGid();
     
+    String genUniqueGid(Long userId);
+    
     boolean isKeyExisted(String gid, Long userId);
 }

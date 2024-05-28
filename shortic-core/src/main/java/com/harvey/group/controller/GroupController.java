@@ -1,16 +1,21 @@
 package com.harvey.group.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.group.entity.domain.GroupDo;
+import com.harvey.group.entity.vo.GroupVo;
 import com.harvey.group.result.GroupResult;
 import com.harvey.group.service.GroupService;
 import com.harvey.user.holder.UserContextHolder;
 import jakarta.annotation.Resource;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @Author harvey
@@ -30,10 +35,8 @@ public class GroupController {
         }
         
         Long userId = UserContextHolder.getUserId();
-        String gid = groupService.genGid();
-        while (groupService.isKeyExisted(gid, userId)) {
-            gid = groupService.genGid();
-        }
+        
+        String gid = groupService.genUniqueGid(userId);
 
         GroupDo groupDo = new GroupDo();
         groupDo.setName(name);
@@ -42,5 +45,20 @@ public class GroupController {
         groupService.save(groupDo);
         
         return Result.success();
+    }
+    
+    @GetMapping("/api/group/v1/list")
+    public Result<List<GroupVo>> listGroup() {
+        Long userId = UserContextHolder.getUserId();
+        
+        List<GroupDo> groupDoList = groupService.lambdaQuery()
+            .eq(GroupDo::getUserId, userId)
+            .list();
+        
+        List<GroupVo> groupVoList = groupDoList.stream()
+            .map(groupDo -> BeanUtil.copyProperties(groupDo, GroupVo.class))
+            .toList();
+        
+        return Result.success(groupVoList);
     }
 }
