@@ -6,6 +6,11 @@ import com.harvey.user.mapper.UserAuthMapper;
 import com.harvey.user.service.UserAuthService;
 import org.springframework.stereotype.Service;
 
+/**
+ * @Author harvey
+ * @Email harveysuen0803@gmail.com
+ * @Date 2024-05-28
+ */
 @Service
 public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuthDo> implements UserAuthService {
 }

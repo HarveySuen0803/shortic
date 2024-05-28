@@ -7,7 +7,9 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * @TableName auth
+ * @Author harvey
+ * @Email harveysuen0803@gmail.com
+ * @Date 2024-05-28
  */
 @Data
 @TableName(value ="t_auth")
