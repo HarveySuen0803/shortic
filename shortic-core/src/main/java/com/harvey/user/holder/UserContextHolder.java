@@ -1,6 +1,8 @@
 package com.harvey.user.holder;
 
+import com.harvey.common.exception.ServerException;
 import com.harvey.user.entity.domain.UserDo;
+import com.harvey.user.result.UserResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,36 +22,21 @@ public class UserContextHolder {
     public static UserDo getUser() {
         Authentication authentication = UserContextHolder.getAuthentication();
         if (authentication == null) {
-            return null;
+            throw new ServerException(UserResult.USER_NOT_FOUND);
         }
         
         return (UserDo) authentication.getPrincipal();
     }
     
     public static String getUsername() {
-        UserDo userDo = UserContextHolder.getUser();
-        if (userDo == null) {
-            return null;
-        }
-        
-        return userDo.getUsername();
+        return getUser().getUsername();
     }
     
     public static Long getUserId() {
-        UserDo userDo = UserContextHolder.getUser();
-        if (userDo == null) {
-            return null;
-        }
-        
-        return userDo.getId();
+        return getUser().getId();
     }
     
     public static Collection<? extends GrantedAuthority> getAuthorities() {
-        UserDo userDo = UserContextHolder.getUser();
-        if (userDo == null) {
-            return null;
-        }
-        
-        return userDo.getAuthorities();
+        return getUser().getAuthorities();
     }
 }
