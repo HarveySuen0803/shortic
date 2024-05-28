@@ -1,14 +1,12 @@
 package com.harvey.group.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
-import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.group.entity.domain.GroupDo;
 import com.harvey.group.entity.dto.GroupAddDto;
+import com.harvey.group.entity.dto.GroupDeleteDto;
 import com.harvey.group.entity.dto.GroupUpdateDto;
 import com.harvey.group.entity.vo.GroupVo;
-import com.harvey.group.result.GroupResult;
 import com.harvey.group.service.GroupService;
 import com.harvey.user.holder.UserContextHolder;
 import jakarta.annotation.Resource;
@@ -71,6 +69,22 @@ public class GroupController {
             .set(GroupDo::getName, name)
             .eq(GroupDo::getGid, gid)
             .eq(GroupDo::getUserId, userId)
+            .update();
+        
+        return Result.success();
+    }
+    
+    @Transactional
+    @DeleteMapping("/api/group/v1")
+    public Result<Void> deleteGroup(@RequestBody GroupDeleteDto groupDeleteDto) {
+        String gid = groupDeleteDto.getGid();
+        Long userId = UserContextHolder.getUserId();
+        
+        groupService.lambdaUpdate()
+            .set(GroupDo::getIsEnabled, 0)
+            .eq(GroupDo::getGid, gid)
+            .eq(GroupDo::getUserId, userId)
+            .eq(GroupDo::getIsEnabled, 1)
             .update();
         
         return Result.success();

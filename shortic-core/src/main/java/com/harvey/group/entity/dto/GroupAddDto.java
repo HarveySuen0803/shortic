@@ -4,6 +4,10 @@ import cn.hutool.core.util.StrUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.group.result.GroupResult;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @Author harvey
@@ -11,7 +15,8 @@ import lombok.Data;
  * @Date 2024-05-28
  */
 @Data
-public class GroupAddDto {
+@NoArgsConstructor
+public class GroupAddDto implements Serializable {
     private String name;
     
     public GroupAddDto(String name) {
@@ -21,4 +26,7 @@ public class GroupAddDto {
         
         this.name = name;
     }
+    
+    @Serial
+    private static final long serialVersionUID = 1L;
 }

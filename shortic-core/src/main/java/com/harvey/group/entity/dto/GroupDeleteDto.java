@@ -16,21 +16,15 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-public class GroupUpdateDto implements Serializable {
+public class GroupDeleteDto implements Serializable {
     private String gid;
     
-    private String name;
-    
-    public GroupUpdateDto(String gid, String name) {
+    public GroupDeleteDto(String gid) {
         if (StrUtil.isBlank(gid)) {
             throw new ClientException(GroupResult.GID_INVALID);
         }
-        if (StrUtil.isBlank(name)) {
-            throw new ClientException(GroupResult.NAME_INVALID);
-        }
         
         this.gid = gid;
-        this.name = name;
     }
     
     @Serial
