@@ -4,19 +4,27 @@ import cn.hutool.core.util.StrUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.user.result.UserResult;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @Author harvey
  * @Email harveysuen0803@gmail.com
- * @Date 2024-05-26
+ * @Date 2024-05-28
  */
 @Data
-public class UserRegisterDto {
+@NoArgsConstructor
+public class UserRegisterDto implements Serializable {
     private String username;
     
     private String password;
     
     private String email;
+    
+    @Serial
+    private static final long serialVersionUID = 1L;
     
     public UserRegisterDto(String username, String password, String email) {
         if (StrUtil.isBlank(username)) {

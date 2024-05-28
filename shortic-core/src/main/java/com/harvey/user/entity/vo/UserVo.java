@@ -3,16 +3,22 @@ package com.harvey.user.entity.vo;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @Author harvey
  * @Email harveysuen0803@gmail.com
  * @Date 2024-05-22
  */
 @Data
-public class UserVo {
+public class UserVo implements Serializable {
     private String username;
     
     private String email;
+    
+    @Serial
+    private static final long serialVersionUID = 1L;
     
     public void mask() {
         maskEmail();
