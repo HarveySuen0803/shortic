@@ -5,6 +5,7 @@ import com.harvey.common.result.Result;
 import com.harvey.group.entity.domain.GroupDo;
 import com.harvey.group.entity.dto.GroupAddDto;
 import com.harvey.group.entity.dto.GroupDeleteDto;
+import com.harvey.group.entity.dto.GroupSortDto;
 import com.harvey.group.entity.dto.GroupUpdateDto;
 import com.harvey.group.entity.vo.GroupVo;
 import com.harvey.group.service.GroupService;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author harvey
@@ -86,6 +89,34 @@ public class GroupController {
             .eq(GroupDo::getUserId, userId)
             .eq(GroupDo::getIsEnabled, 1)
             .update();
+        
+        return Result.success();
+    }
+    
+    @Transactional
+    @PostMapping("/api/group/v1/sort")
+    public Result<Void> sortGroup(@RequestBody List<GroupSortDto> groupSortDtoList) {
+        Long userId = UserContextHolder.getUserId();
+        
+        List<String> gidList = groupSortDtoList.stream()
+            .map(GroupSortDto::getGid)
+            .toList();
+        
+        List<GroupDo> groupDoList = groupService.lambdaQuery()
+            .in(GroupDo::getGid, gidList)
+            .eq(GroupDo::getUserId, userId)
+            .list();
+        
+        Map<String, Integer> gidToSortMap = groupSortDtoList.stream()
+            .collect(Collectors.toMap(GroupSortDto::getGid, GroupSortDto::getSort));
+        
+        groupDoList = groupDoList.stream().peek(groupDo -> {
+            String gid = groupDo.getGid();
+            Integer sort = gidToSortMap.get(gid);
+            groupDo.setSort(sort);
+        }).toList();
+        
+        groupService.saveOrUpdateBatch(groupDoList);
         
         return Result.success();
     }

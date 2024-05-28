@@ -25,6 +25,8 @@ public class GroupDo implements Serializable {
 
     private Long userId;
     
+    private Integer sort;
+    
     @TableField(fill = FieldFill.INSERT)
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
