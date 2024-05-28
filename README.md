@@ -46,7 +46,7 @@ curl -LJO http://download.redis.io/redis-stable/redis.conf
 mv ./redis.conf /opt/redis/conf
 ```
 
-Modify the Redis configuration file.
+Modify the Redis configuration file (file: /opt/redis/conf/redis.conf).
 
 ```
 # run as a daemon in background
