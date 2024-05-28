@@ -5,15 +5,14 @@ import cn.hutool.core.util.StrUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.group.entity.domain.GroupDo;
+import com.harvey.group.entity.dto.GroupUpdateDto;
 import com.harvey.group.entity.vo.GroupVo;
 import com.harvey.group.result.GroupResult;
 import com.harvey.group.service.GroupService;
 import com.harvey.user.holder.UserContextHolder;
 import jakarta.annotation.Resource;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -60,5 +59,21 @@ public class GroupController {
             .toList();
         
         return Result.success(groupVoList);
+    }
+    
+    @Transactional
+    @PutMapping("/api/group/v1")
+    public Result<Void> updateGroup(@RequestBody GroupUpdateDto groupUpdateDto) {
+        Long userId = UserContextHolder.getUserId();
+        String gid = groupUpdateDto.getGid();
+        String name = groupUpdateDto.getName();
+        
+        groupService.lambdaUpdate()
+            .set(GroupDo::getName, name)
+            .eq(GroupDo::getGid, gid)
+            .eq(GroupDo::getUserId, userId)
+            .update();
+        
+        return Result.success();
     }
 }
