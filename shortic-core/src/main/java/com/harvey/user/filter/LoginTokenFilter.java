@@ -7,7 +7,7 @@ import com.harvey.common.http.ResponseUtil;
 import com.harvey.common.result.Result;
 import com.harvey.user.cache.UserCacheKey;
 import com.harvey.user.constant.UserConstant;
-import com.harvey.user.domain.UserDo;
+import com.harvey.user.entity.domain.UserDo;
 import com.harvey.user.http.UserHttpUri;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;

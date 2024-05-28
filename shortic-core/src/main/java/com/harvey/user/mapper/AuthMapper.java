@@ -1,7 +1,7 @@
 package com.harvey.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.harvey.user.domain.AuthDo;
+import com.harvey.user.entity.domain.AuthDo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

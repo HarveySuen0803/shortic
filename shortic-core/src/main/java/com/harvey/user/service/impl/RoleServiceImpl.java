@@ -1,7 +1,7 @@
 package com.harvey.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.user.domain.RoleDo;
+import com.harvey.user.entity.domain.RoleDo;
 import com.harvey.user.mapper.RoleMapper;
 import com.harvey.user.service.RoleService;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.harvey.user.vo;
+package com.harvey.user.entity.vo;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;

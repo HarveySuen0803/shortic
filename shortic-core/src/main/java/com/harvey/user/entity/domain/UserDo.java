@@ -1,4 +1,4 @@
-package com.harvey.user.domain;
+package com.harvey.user.entity.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;

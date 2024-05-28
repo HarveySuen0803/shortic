@@ -3,18 +3,21 @@ package com.harvey.user.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
-import com.harvey.user.domain.UserDo;
-import com.harvey.user.dto.UserRegisterDto;
+import com.harvey.user.entity.domain.UserDo;
+import com.harvey.user.entity.dto.UserRegisterDto;
+import com.harvey.user.entity.vo.UserVo;
 import com.harvey.user.result.UserResult;
 import com.harvey.user.service.UserService;
-import com.harvey.user.vo.UserVo;
 import jakarta.annotation.Resource;
 import org.redisson.api.RBloomFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author harvey
@@ -39,7 +42,7 @@ public class UserController {
     public Result<Void> register(UserRegisterDto userRegisterDto) {
         boolean isUserExist = userService.isUserExists(userRegisterDto.getUsername(), userRegisterDto.getEmail());
         if (isUserExist) {
-            throw new ClientException(UserResult.USER_EXISTS);
+            throw new ClientException(UserResult.USER_NOT_FOUND);
         }
         
         UserDo userDo = BeanUtil.copyProperties(userRegisterDto, UserDo.class);

@@ -1,4 +1,4 @@
-package com.harvey.user.dto;
+package com.harvey.user.entity.dto;
 
 import lombok.Data;
 

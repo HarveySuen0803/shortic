@@ -1,6 +1,6 @@
 package com.harvey.user.holder;
 
-import com.harvey.user.domain.UserDo;
+import com.harvey.user.entity.domain.UserDo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

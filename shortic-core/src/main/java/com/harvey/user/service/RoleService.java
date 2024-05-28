@@ -1,9 +1,7 @@
 package com.harvey.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.harvey.user.domain.RoleDo;
-import com.harvey.user.domain.UserDo;
-import com.harvey.user.vo.UserVo;
+import com.harvey.user.entity.domain.RoleDo;
 
 /**
  * @Author harvey

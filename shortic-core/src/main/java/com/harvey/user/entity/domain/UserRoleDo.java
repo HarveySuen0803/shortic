@@ -1,4 +1,4 @@
-package com.harvey.user.domain;
+package com.harvey.user.entity.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -9,15 +9,17 @@ import java.io.Serializable;
 /**
  * @Author harvey
  * @Email harveysuen0803@gmail.com
- * @Date 2024-05-28
+ * @Date 2024-05-24
  */
 @Data
-@TableName(value ="t_auth")
-public class AuthDo implements Serializable {
+@TableName("t_user_role")
+public class UserRoleDo implements Serializable {
     private Long id;
-
-    private String name;
-
+    
+    private Long userId;
+    
+    private Long roleId;
+    
     @Serial
     private static final long serialVersionUID = 1L;
 }
