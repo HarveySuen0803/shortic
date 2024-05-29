@@ -53,8 +53,6 @@ public class UserController {
         
         userService.saveOrUpdate(userDo);
         
-        System.out.println(userDo);
-        
         userBloomFilter.add(userDo.getId());
         
         return Result.success();
