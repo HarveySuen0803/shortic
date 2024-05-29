@@ -1,4 +1,4 @@
-package com.harvey.common.config;
+package com.harvey.user.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.harvey.user.util.UserContextHolder;
