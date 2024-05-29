@@ -31,4 +31,23 @@ public class GlobalExceptionHandler {
         log.error("Catch base exception, Request Url: {}, Request Method: {}, Exception Class: {}, Exception Code: {}, Exception Message: {}", req.getRequestURL(), req.getMethod(), e.getClass(), e.getCode(), e.getMessage());
         return Result.failure(e.getCode(), e.getMessage());
     }
+    
+    @ExceptionHandler(ClientException.class)
+    public Result handleClientException(ClientException e, HttpServletRequest req) {
+        log.error("Catch client exception, Request Url: {}, Request Method: {}, Exception Class: {}, Exception Code: {}, Exception Message: {}", req.getRequestURL(), req.getMethod(), e.getClass(), e.getCode(), e.getMessage());
+        return Result.failure(e.getCode(), e.getMessage());
+    }
+    
+    
+    @ExceptionHandler(ServerException.class)
+    public Result handleServerException(ServerException e, HttpServletRequest req) {
+        log.error("Catch server exception, Request Url: {}, Request Method: {}, Exception Class: {}, Exception Code: {}, Exception Message: {}", req.getRequestURL(), req.getMethod(), e.getClass(), e.getCode(), e.getMessage());
+        return Result.failure(e.getCode(), e.getMessage());
+    }
+    
+    @ExceptionHandler(RemoteException.class)
+    public Result handleRemoteException(RemoteException e, HttpServletRequest req) {
+        log.error("Catch remote exception, Request Url: {}, Request Method: {}, Exception Class: {}, Exception Code: {}, Exception Message: {}", req.getRequestURL(), req.getMethod(), e.getClass(), e.getCode(), e.getMessage());
+        return Result.failure(e.getCode(), e.getMessage());
+    }
 }
