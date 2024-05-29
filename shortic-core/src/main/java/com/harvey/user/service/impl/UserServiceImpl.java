@@ -3,6 +3,7 @@ package com.harvey.user.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.common.constant.Constant;
 import com.harvey.common.exception.ClientException;
 import com.harvey.user.entity.domain.*;
 import com.harvey.user.entity.vo.UserVo;
@@ -129,6 +130,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         UserDo userDo = lambdaQuery()
             .select(UserDo::getUsername, UserDo::getEmail)
             .eq(UserDo::getUsername, username)
+            .eq(UserDo::getIsEnabled, Constant.ENABLED)
+            .eq(UserDo::getIsDeleted, Constant.NOT_DELETED)
             .one();
         if (ObjUtil.isNull(userDo)) {
             throw new ClientException(UserResult.USER_NOT_FOUND);

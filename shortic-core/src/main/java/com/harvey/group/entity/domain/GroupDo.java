@@ -41,7 +41,7 @@ public class GroupDo implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
 
-    private Integer isEnabled;
+    private Byte isDeleted;
 
     @Serial
     private static final long serialVersionUID = 1L;

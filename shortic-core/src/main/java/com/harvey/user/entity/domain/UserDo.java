@@ -49,7 +49,9 @@ public class UserDo implements Serializable, UserDetails {
     
     private Integer isAccountNoLocked;
     
-    private Integer isEnabled;
+    private Byte isEnabled;
+    
+    private Byte isDeleted;
     
     @TableField(exist = false)
     private Collection<? extends GrantedAuthority> authorities;

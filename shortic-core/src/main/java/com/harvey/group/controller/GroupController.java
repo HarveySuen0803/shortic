@@ -1,6 +1,7 @@
 package com.harvey.group.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.harvey.common.constant.Constant;
 import com.harvey.common.result.Result;
 import com.harvey.group.entity.domain.GroupDo;
 import com.harvey.group.entity.dto.GroupAddDto;
@@ -52,6 +53,7 @@ public class GroupController {
         
         List<GroupDo> groupDoList = groupService.lambdaQuery()
             .eq(GroupDo::getUserId, userId)
+            .eq(GroupDo::getIsDeleted, Constant.NOT_DELETED)
             .list();
         
         List<GroupVo> groupVoList = groupDoList.stream()
@@ -84,10 +86,10 @@ public class GroupController {
         Long userId = UserContextHolder.getUserId();
         
         groupService.lambdaUpdate()
-            .set(GroupDo::getIsEnabled, 0)
+            .set(GroupDo::getIsDeleted, Constant.NOT_DELETED)
             .eq(GroupDo::getGid, gid)
             .eq(GroupDo::getUserId, userId)
-            .eq(GroupDo::getIsEnabled, 1)
+            .eq(GroupDo::getIsDeleted, Constant.DELETED)
             .update();
         
         return Result.success();
@@ -105,6 +107,7 @@ public class GroupController {
         List<GroupDo> groupDoList = groupService.lambdaQuery()
             .in(GroupDo::getGid, gidList)
             .eq(GroupDo::getUserId, userId)
+            .eq(GroupDo::getIsDeleted, Constant.NOT_DELETED)
             .list();
         
         Map<String, Integer> gidToSortMap = groupSortDtoList.stream()
