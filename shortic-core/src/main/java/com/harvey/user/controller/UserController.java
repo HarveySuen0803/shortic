@@ -51,7 +51,7 @@ public class UserController {
         String encodedPassword = passwordEncoder.encode(password);
         userDo.setPassword(encodedPassword);
         
-        userService.save(userDo);
+        userService.saveOrUpdate(userDo);
         
         System.out.println(userDo);
         

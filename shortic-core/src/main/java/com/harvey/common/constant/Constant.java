@@ -6,11 +6,11 @@ package com.harvey.common.constant;
  * @Date 2024-05-29
  */
 public class Constant {
-    public static final Integer ENABLED = 1;
+    public static final Byte ENABLED = 1;
     
-    public static final Integer NOT_ENABLED = 0;
+    public static final Byte NOT_ENABLED = 0;
     
-    public static final Integer DELETED = 0;
+    public static final Byte DELETED = 0;
     
-    public static final Integer NOT_DELETED = 1;
+    public static final Byte NOT_DELETED = 1;
 }

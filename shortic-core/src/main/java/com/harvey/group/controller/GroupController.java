@@ -1,7 +1,9 @@
 package com.harvey.group.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjUtil;
 import com.harvey.common.constant.Constant;
+import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.group.entity.domain.GroupDo;
 import com.harvey.group.entity.dto.GroupAddDto;
@@ -9,6 +11,7 @@ import com.harvey.group.entity.dto.GroupDeleteDto;
 import com.harvey.group.entity.dto.GroupSortDto;
 import com.harvey.group.entity.dto.GroupUpdateDto;
 import com.harvey.group.entity.vo.GroupVo;
+import com.harvey.group.result.GroupResult;
 import com.harvey.group.service.GroupService;
 import com.harvey.user.holder.UserContextHolder;
 import jakarta.annotation.Resource;
@@ -70,11 +73,18 @@ public class GroupController {
         String gid = groupUpdateDto.getGid();
         String name = groupUpdateDto.getName();
         
-        groupService.lambdaUpdate()
-            .set(GroupDo::getName, name)
+        GroupDo groupDo = groupService.lambdaQuery()
             .eq(GroupDo::getGid, gid)
             .eq(GroupDo::getUserId, userId)
-            .update();
+            .eq(GroupDo::getIsDeleted, Constant.NOT_DELETED)
+            .one();
+        if (ObjUtil.isNull(groupDo)) {
+            throw new ClientException(GroupResult.GROUP_NOT_FOUND);
+        }
+        
+        groupDo.setName(name);
+        
+        groupService.saveOrUpdate(groupDo);
         
         return Result.success();
     }
@@ -85,12 +95,18 @@ public class GroupController {
         String gid = groupDeleteDto.getGid();
         Long userId = UserContextHolder.getUserId();
         
-        groupService.lambdaUpdate()
-            .set(GroupDo::getIsDeleted, Constant.NOT_DELETED)
+        GroupDo groupDo = groupService.lambdaQuery()
             .eq(GroupDo::getGid, gid)
             .eq(GroupDo::getUserId, userId)
-            .eq(GroupDo::getIsDeleted, Constant.DELETED)
-            .update();
+            .eq(GroupDo::getIsDeleted, Constant.NOT_DELETED)
+            .one();
+        if (ObjUtil.isNull(groupDo)) {
+            throw new ClientException(GroupResult.GROUP_NOT_FOUND);
+        }
+        
+        groupDo.setIsDeleted(Constant.DELETED);
+        
+        groupService.saveOrUpdate(groupDo);
         
         return Result.success();
     }
