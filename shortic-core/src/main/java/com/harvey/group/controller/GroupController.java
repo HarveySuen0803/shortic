@@ -33,7 +33,7 @@ public class GroupController {
     private GroupService groupService;
     
     @Transactional
-    @PostMapping("/api/group/v1")
+    @PostMapping("/api/shortic/group/v1")
     public Result<Void> addGroup(@RequestBody GroupAddDto groupAddDto) {
         String name = groupAddDto.getName();
         
@@ -50,7 +50,7 @@ public class GroupController {
         return Result.success();
     }
     
-    @GetMapping("/api/group/v1/list")
+    @GetMapping("/api/shortic/group/v1/list")
     public Result<List<GroupVo>> listGroup() {
         Long userId = UserContextHolder.getUserId();
         
@@ -67,7 +67,7 @@ public class GroupController {
     }
     
     @Transactional
-    @PutMapping("/api/group/v1")
+    @PutMapping("/api/shortic/group/v1")
     public Result<Void> updateGroup(@RequestBody GroupUpdateDto groupUpdateDto) {
         Long userId = UserContextHolder.getUserId();
         String gid = groupUpdateDto.getGid();
@@ -90,7 +90,7 @@ public class GroupController {
     }
     
     @Transactional
-    @DeleteMapping("/api/group/v1")
+    @DeleteMapping("/api/shortic/group/v1")
     public Result<Void> deleteGroup(@RequestBody GroupDeleteDto groupDeleteDto) {
         String gid = groupDeleteDto.getGid();
         Long userId = UserContextHolder.getUserId();
@@ -112,7 +112,7 @@ public class GroupController {
     }
     
     @Transactional
-    @PostMapping("/api/group/v1/sort")
+    @PostMapping("/api/shortic/group/v1/sort")
     public Result<Void> sortGroup(@RequestBody List<GroupSortDto> groupSortDtoList) {
         Long userId = UserContextHolder.getUserId();
         
