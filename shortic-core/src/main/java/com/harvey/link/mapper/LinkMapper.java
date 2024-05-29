@@ -1,6 +1,6 @@
 package com.harvey.link.mapper;
 
-import com.harvey.link.entitiy.domain.Link;
+import com.harvey.link.entitiy.domain.LinkDo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date 2024-05-29
  */
 @Mapper
-public interface LinkMapper extends BaseMapper<Link> {
+public interface LinkMapper extends BaseMapper<LinkDo> {
 }

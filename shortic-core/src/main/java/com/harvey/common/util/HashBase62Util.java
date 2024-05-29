@@ -33,14 +33,14 @@ public class HashBase62Util {
         return base62Sb.reverse().toString();
     }
 
-    public static String toBase62(String str) {
+    public static String toBase62(String str, int len) {
         byte[] hash = toHash(str);
         
         String base62 = toBase62(hash);
         
-        if (base62.length() < 6) {
+        if (base62.length() < len) {
             StringBuilder base62Sb = new StringBuilder(base62);
-            while (base62Sb.length() < 6) {
+            while (base62Sb.length() < len) {
                 base62Sb.append(BASE62_CHARS[RANDOM.nextInt(BASE62_CHARS.length)]);
             }
             base62 = base62Sb.toString();
