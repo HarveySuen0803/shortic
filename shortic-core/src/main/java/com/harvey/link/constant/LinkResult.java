@@ -16,4 +16,6 @@ public class LinkResult extends Result {
     public static final Result SHORT_URI_INVALID = new Result(3003, "shortUri is invalid");
     
     public static final Result LONG_URL_INVALID = new Result(3004, "longUrl is invalid");
+    
+    public static final Result SHORT_URI_GENERATE_FAILURE = new Result(3005, "failed to generate short uri");
 }

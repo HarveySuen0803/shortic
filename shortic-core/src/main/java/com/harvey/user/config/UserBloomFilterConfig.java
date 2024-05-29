@@ -1,6 +1,5 @@
 package com.harvey.user.config;
 
-import com.harvey.user.constant.UserCacheKey;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
  * @Date 2024-05-27
  */
 @Configuration
-public class BloomFilterConfig {
+public class UserBloomFilterConfig {
     @Bean
     public RBloomFilter userBloomFilter(RedissonClient redissonClient) {
-        RBloomFilter<String> bloomFilter = redissonClient.getBloomFilter(UserCacheKey.USER_ID_BLOOM_FILTER.getKey());
+        RBloomFilter<String> bloomFilter = redissonClient.getBloomFilter("user:bloomfilter:use_id");
         bloomFilter.tryInit(100000, 0.01);
         return bloomFilter;
     }

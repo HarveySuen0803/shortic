@@ -2,7 +2,6 @@ package com.harvey.link.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.harvey.common.constant.Result;
-import com.harvey.common.util.HashBase62Util;
 import com.harvey.link.entitiy.domain.LinkDo;
 import com.harvey.link.entitiy.dto.LinkAddDto;
 import com.harvey.link.service.LinkService;

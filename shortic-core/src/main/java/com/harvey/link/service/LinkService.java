@@ -1,7 +1,7 @@
 package com.harvey.link.service;
 
-import com.harvey.link.entitiy.domain.LinkDo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.harvey.link.entitiy.domain.LinkDo;
 
 /**
  * @Author harvey
@@ -10,4 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface LinkService extends IService<LinkDo> {
     String getShortUri(String longUrl);
+    
+    boolean isShortUriExists(String shortUri);
 }
