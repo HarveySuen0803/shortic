@@ -1,4 +1,4 @@
-package com.harvey.common.cache;
+package com.harvey.common.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

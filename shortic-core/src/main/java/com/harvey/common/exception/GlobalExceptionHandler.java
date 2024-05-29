@@ -1,6 +1,6 @@
 package com.harvey.common.exception;
 
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

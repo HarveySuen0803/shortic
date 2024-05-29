@@ -1,4 +1,4 @@
-package com.harvey.common.log;
+package com.harvey.log.constant;
 
 /**
  * @Author harvey

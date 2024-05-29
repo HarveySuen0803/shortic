@@ -1,4 +1,6 @@
-package com.harvey.common.log;
+package com.harvey.log.anno;
+
+import com.harvey.log.constant.ApiLogConstant;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

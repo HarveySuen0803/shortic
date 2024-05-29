@@ -1,6 +1,6 @@
 package com.harvey.user.config;
 
-import com.harvey.user.cache.UserCacheKey;
+import com.harvey.user.constant.UserCacheKey;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;

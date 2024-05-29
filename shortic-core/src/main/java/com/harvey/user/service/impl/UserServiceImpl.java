@@ -8,7 +8,7 @@ import com.harvey.common.exception.ClientException;
 import com.harvey.user.entity.domain.*;
 import com.harvey.user.entity.vo.UserVo;
 import com.harvey.user.mapper.UserMapper;
-import com.harvey.user.result.UserResult;
+import com.harvey.user.constant.UserResult;
 import com.harvey.user.service.*;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.GrantedAuthority;

@@ -2,7 +2,7 @@ package com.harvey.user.entity.dto;
 
 import cn.hutool.core.util.StrUtil;
 import com.harvey.common.exception.ClientException;
-import com.harvey.user.result.UserResult;
+import com.harvey.user.constant.UserResult;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

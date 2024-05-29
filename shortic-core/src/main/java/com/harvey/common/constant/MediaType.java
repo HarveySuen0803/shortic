@@ -1,4 +1,4 @@
-package com.harvey.common.http;
+package com.harvey.common.constant;
 
 /**
  * @Author harvey

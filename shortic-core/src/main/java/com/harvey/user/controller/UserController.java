@@ -2,11 +2,11 @@ package com.harvey.user.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.harvey.common.exception.ClientException;
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import com.harvey.user.entity.domain.UserDo;
 import com.harvey.user.entity.dto.UserRegisterDto;
 import com.harvey.user.entity.vo.UserVo;
-import com.harvey.user.result.UserResult;
+import com.harvey.user.constant.UserResult;
 import com.harvey.user.service.UserService;
 import jakarta.annotation.Resource;
 import org.redisson.api.RBloomFilter;

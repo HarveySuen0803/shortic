@@ -1,8 +1,8 @@
-package com.harvey.user.holder;
+package com.harvey.user.util;
 
 import com.harvey.common.exception.ServerException;
 import com.harvey.user.entity.domain.UserDo;
-import com.harvey.user.result.UserResult;
+import com.harvey.user.constant.UserResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,6 +1,6 @@
-package com.harvey.user.cache;
+package com.harvey.user.constant;
 
-import com.harvey.common.cache.CacheKey;
+import com.harvey.common.constant.CacheKey;
 
 import java.util.concurrent.TimeUnit;
 

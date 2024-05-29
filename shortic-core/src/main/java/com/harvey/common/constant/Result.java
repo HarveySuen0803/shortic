@@ -1,4 +1,4 @@
-package com.harvey.common.result;
+package com.harvey.common.constant;
 
 import lombok.Getter;
 

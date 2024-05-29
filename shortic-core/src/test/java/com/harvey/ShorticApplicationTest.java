@@ -1,9 +1,10 @@
 package com.harvey;
 
-import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 /**
  * @Author harvey
@@ -12,12 +13,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @SpringBootTest
 public class ShorticApplicationTest {
-    @Resource
-    private PasswordEncoder passwordEncoder;
-
     @Test
-    public void test() {
-        String encode = passwordEncoder.encode("123456");
-        System.out.println(encode);
+    public void test() throws NoSuchAlgorithmException {
+        // String str = HashBase62Util.toBase62("hello world");
+        // System.out.println(str);
+        
+        // String str = "hello world";
+        // System.out.println(Arrays.toString(str.getBytes()));
+        //
+        // MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        // byte[] digest = messageDigest.digest(str.getBytes(StandardCharsets.UTF_8));
+        // System.out.println(Arrays.toString(digest));
+        
+        String str = "abc";
+        System.out.println(Arrays.toString(str.getBytes()));
+        
+        System.out.println();
     }
 }

@@ -1,6 +1,6 @@
-package com.harvey.user.result;
+package com.harvey.user.constant;
 
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 
 /**
  * @Author harvey

@@ -1,4 +1,4 @@
-package com.harvey.common.http;
+package com.harvey.common.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;

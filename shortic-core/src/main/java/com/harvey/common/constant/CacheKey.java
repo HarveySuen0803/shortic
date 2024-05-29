@@ -1,4 +1,4 @@
-package com.harvey.common.cache;
+package com.harvey.common.constant;
 
 import java.util.concurrent.TimeUnit;
 

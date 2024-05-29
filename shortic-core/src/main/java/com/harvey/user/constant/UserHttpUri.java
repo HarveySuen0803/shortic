@@ -1,6 +1,6 @@
-package com.harvey.user.http;
+package com.harvey.user.constant;
 
-import com.harvey.common.http.HttpUri;
+import com.harvey.common.constant.HttpUri;
 
 /**
  * @Author harvey
