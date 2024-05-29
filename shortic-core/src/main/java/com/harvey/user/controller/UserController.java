@@ -60,14 +60,14 @@ public class UserController {
 
     @GetMapping("/api/user/v1/{username}")
     public Result<UserVo> getUser(@PathVariable String username) {
-        UserVo userVo = userService.getUser(username);
+        UserVo userVo = userService.getUserVo(username);
         
         return Result.success(userVo);
     }
     
     @GetMapping("/api/user/v1/{username}/mask")
     public Result<UserVo> getUserMask(@PathVariable String username) {
-        UserVo userVo = userService.getUser(username);
+        UserVo userVo = userService.getUserVo(username);
         
         userVo.mask();
         

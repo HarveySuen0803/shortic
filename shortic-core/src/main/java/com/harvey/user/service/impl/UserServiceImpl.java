@@ -126,7 +126,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     }
     
     @Override
-    public UserVo getUser(String username) {
+    public UserVo getUserVo(String username) {
         UserDo userDo = lambdaQuery()
             .select(UserDo::getUsername, UserDo::getEmail)
             .eq(UserDo::getUsername, username)
@@ -144,7 +144,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     
     @Override
     public boolean isUserExists(String username, String email) {
-        return isUsernameExists(username) || isEmailExists(email);
+        boolean isExists = isUsernameExists(username) || isEmailExists(email);
+        
+        return isExists;
     }
     
     @Override
