@@ -25,8 +25,7 @@ public class LinkController {
     public Result<Void> addLink(@RequestBody LinkAddDto linkAddDto) {
         String longUrl = linkAddDto.getLongUrl();
         
-        // Todo: encap
-        String shortUri = HashBase62Util.toBase62(longUrl, 6);
+        String shortUri = linkService.getShortUri(longUrl);
         
         String shortDim = linkAddDto.getShortDim();
         String shortUrl = shortDim + shortUri;

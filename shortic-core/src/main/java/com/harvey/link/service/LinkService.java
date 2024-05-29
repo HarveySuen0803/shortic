@@ -9,4 +9,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Date 2024-05-29
  */
 public interface LinkService extends IService<LinkDo> {
+    String getShortUri(String longUrl);
 }
