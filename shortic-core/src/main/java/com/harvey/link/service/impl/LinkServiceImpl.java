@@ -30,15 +30,28 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDo> implements 
         
         int shortUriGenerateCount = 0;
         
-        while (isShortUriExists(shortUri)) {
+        // Continue generating new short URIs while the current short URI exists in the Bloom filter
+        while (shortUriBloomFilter.contains(shortUri)) {
+            // If the generation attempt exceeds the maximum allowed count, handle the failure
             if (shortUriGenerateCount > LinkConstant.MAX_SHORT_URI_GENERATE_COUNT) {
+                // Check if the short URI does not exist in the actual storage
+                if (isShortUriNotExists(shortUri)) {
+                    break;
+                }
+                // Throw a server exception indicating short URI generation failure
                 throw new ServerException(LinkResult.SHORT_URI_GENERATE_FAILURE);
             }
+            
+            // Continue generating new short URIs while the current short URI exists in the Bloom filter
             longUrl += UUID.randomUUID().toString();
+            
+            // Generate a new base62 short URI with a length of 6 from the modified long URL
             shortUri = HashBase62Util.toBase62(longUrl, 6);
+            
             shortUriGenerateCount++;
         }
         
+        // Increment the short URI generation attempt counter
         shortUriBloomFilter.add(shortUri);
         
         return shortUri;
@@ -46,6 +59,15 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDo> implements 
     
     @Override
     public boolean isShortUriExists(String shortUri) {
-        return shortUriBloomFilter.contains(shortUri);
+        boolean isExists = lambdaQuery()
+            .eq(LinkDo::getShortUri, shortUri)
+            .exists();
+        
+        return isExists;
+    }
+    
+    @Override
+    public boolean isShortUriNotExists(String shortUri) {
+        return !isShortUriExists(shortUri);
     }
 }

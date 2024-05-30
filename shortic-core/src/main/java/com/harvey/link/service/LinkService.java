@@ -12,4 +12,6 @@ public interface LinkService extends IService<LinkDo> {
     String getShortUri(String longUrl);
     
     boolean isShortUriExists(String shortUri);
+    
+    boolean isShortUriNotExists(String shortUri);
 }
