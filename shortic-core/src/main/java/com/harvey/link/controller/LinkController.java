@@ -1,14 +1,20 @@
 package com.harvey.link.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.harvey.common.constant.Constant;
 import com.harvey.common.constant.Result;
 import com.harvey.link.entitiy.domain.LinkDo;
 import com.harvey.link.entitiy.dto.LinkAddDto;
+import com.harvey.link.entitiy.dto.LinkPageDto;
+import com.harvey.link.entitiy.vo.LinkPageVo;
+import com.harvey.link.entitiy.vo.LinkVo;
 import com.harvey.link.service.LinkService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.NonNull;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author harvey
@@ -36,5 +42,33 @@ public class LinkController {
         linkService.saveOrUpdate(linkDo);
         
         return Result.success();
+    }
+    
+    @PostMapping("/api/shortic/link/v1/page")
+    public Result<LinkPageVo> pageLink(@RequestBody LinkPageDto linkPageDto) {
+        String gid = linkPageDto.getGid();
+        Long pageNo = linkPageDto.getPageNo();
+        Long pageSize = linkPageDto.getPageSize();
+        
+        Page<LinkDo> page = new Page<>(pageNo, pageSize);
+        
+        linkService.lambdaQuery()
+            .eq(LinkDo::getGid, gid)
+            .eq(LinkDo::getIsDeleted, Constant.NOT_DELETED)
+            .eq(LinkDo::getIsEnabled, Constant.ENABLED)
+            .page(page);
+        
+        List<LinkDo> linkDoList = page.getRecords();
+        Long totalSize = page.getSize();
+        
+        List<LinkVo> linkVoList = linkDoList.stream()
+            .map(linkDo -> BeanUtil.copyProperties(linkDo, LinkVo.class))
+            .toList();
+        
+        LinkPageVo linkPageVo = new LinkPageVo();
+        linkPageVo.setLinkVoList(linkVoList);
+        linkPageVo.setTotalSize(totalSize);
+        
+        return Result.success(linkPageVo);
     }
 }
