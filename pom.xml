@@ -10,7 +10,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>shortic-core</module>
+        <module>shortic-user</module>
+        <module>shortic-common</module>
+        <module>shortic-link</module>
+        <module>shortic-group</module>
+        <module>shortic-log</module>
+        <module>shortic-api</module>
     </modules>
 
     <properties>
@@ -29,6 +34,8 @@
         <hutool-all.version>5.8.27</hutool-all.version>
         <redisson.version>3.15.6</redisson.version>
         <guava.version>30.0-jre</guava.version>
+        <dubbo.version>3.2.11</dubbo.version>
+        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
     </properties>
 
     <dependencyManagement>
@@ -85,6 +92,12 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
