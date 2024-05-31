@@ -3,6 +3,8 @@ package com.harvey.link.entitiy.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
  * @Date 2024-05-30
  */
 @Data
-public class LinkVo {
+public class LinkVo implements Serializable {
     private String gid;
     
     private Long clickCount;
@@ -30,4 +32,7 @@ public class LinkVo {
     
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expireTime;
+    
+    @Serial
+    private static final long serialVersionUID = 1L;
 }

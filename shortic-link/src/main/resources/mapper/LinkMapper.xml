@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.harvey.link.mapper.LinkMapper">
+    <select id="countLink" resultType="java.util.Map">
+        select
+            gid, count(1) as gid_cnt
+        from
+            t_link
+        where
+            gid in <foreach collection="gidList" item="gid" separator="," open="(" close=")">#{gid}</foreach>
+        group by
+            gid
+    </select>
+</mapper>

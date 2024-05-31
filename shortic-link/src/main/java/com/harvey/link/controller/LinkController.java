@@ -1,20 +1,24 @@
 package com.harvey.link.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.common.constant.Constant;
 import com.harvey.common.constant.Result;
 import com.harvey.link.entitiy.domain.LinkDo;
 import com.harvey.link.entitiy.dto.LinkAddDto;
 import com.harvey.link.entitiy.dto.LinkPageDto;
+import com.harvey.link.entitiy.vo.LinkGroupCountVo;
 import com.harvey.link.entitiy.vo.LinkPageVo;
 import com.harvey.link.entitiy.vo.LinkVo;
+import com.harvey.link.mapper.LinkMapper;
 import com.harvey.link.service.LinkService;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author harvey
@@ -25,6 +29,9 @@ import java.util.List;
 public class LinkController {
     @Resource
     private LinkService linkService;
+    
+    @Resource
+    private LinkMapper linkMapper;
     
     @PutMapping("/api/shortic/link/v1")
     public Result<Void> addLink(@RequestBody LinkAddDto linkAddDto) {
@@ -73,5 +80,21 @@ public class LinkController {
         linkPageVo.setTotalSize(totalSize);
         
         return Result.success(linkPageVo);
+    }
+    
+    @PostMapping("/api/shortic/link/v1/count")
+    public Result countLink(@RequestBody List<String> gidList) {
+        List<Map<String, Object>> linkDoMapList = linkMapper.countLink(gidList);
+        
+        List<LinkGroupCountVo> linkGroupCountVoList = linkDoMapList.stream()
+            .map(linkDoMap -> {
+                LinkGroupCountVo linkGroupCountVo = new LinkGroupCountVo();
+                linkGroupCountVo.setGid((String) linkDoMap.get("gid"));
+                linkGroupCountVo.setCount((Long) linkDoMap.get("gid_cnt"));
+                return linkGroupCountVo;
+            })
+            .toList();
+        
+        return Result.success(linkGroupCountVoList);
     }
 }

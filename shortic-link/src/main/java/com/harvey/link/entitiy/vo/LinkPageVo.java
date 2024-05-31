@@ -3,6 +3,8 @@ package com.harvey.link.entitiy.vo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,8 +14,11 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class LinkPageVo {
+public class LinkPageVo implements Serializable {
     List<LinkVo> linkVoList;
     
     Long totalSize;
+    
+    @Serial
+    private static final long serialVersionUID = 1L;
 }
