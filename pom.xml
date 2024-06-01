@@ -10,12 +10,16 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>shortic-user</module>
-        <module>shortic-common</module>
-        <module>shortic-link</module>
-        <module>shortic-group</module>
-        <module>shortic-log</module>
-        <module>shortic-api</module>
+        <module>harvey-common</module>
+        <module>harvey-common-web</module>
+        <module>harvey-rpc</module>
+        <module>harvey-user</module>
+        <module>harvey-user-common</module>
+        <module>harvey-shortic-link</module>
+        <module>harvey-shortic-group</module>
+        <module>harvey-shortic-log</module>
+        <module>harvey-shortic-link-common</module>
+        <module>harvey-shortic-group-common</module>
     </modules>
 
     <properties>
