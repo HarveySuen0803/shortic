@@ -15,4 +15,18 @@ public class UserConstant {
     public static final int LOGIN_TOKEN_TIMEOUT = 1;
     
     public static final DateField LOGIN_TOKEN_TIMEOUT_UNIT = DateField.MONTH;
+    
+    public static final byte[] ACCESS_TOKEN_KEY = "access_token_key".getBytes();
+    
+    public static final byte[] REFRESH_TOKEN_KEY = "refresh_token_key".getBytes();
+    
+    public static final String USER_DETAILS = "userDetails";
+    
+    public static final String USER_ID = "userId";
+    
+    public static final String USERNAME = "username";
+    
+    public static final String PASSWORD = "password";
+    
+    public static final String AUTHORITIES = "authorities";
 }

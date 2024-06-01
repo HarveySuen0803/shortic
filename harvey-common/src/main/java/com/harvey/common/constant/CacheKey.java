@@ -25,6 +25,4 @@ public class CacheKey {
     public String getKey(Object... param) {
         return String.format(prefix, param);
     }
-    
-    public static final CacheKey LOGIN_TOKEN = new CacheKey("user:token:login:%s", 60 * 24 * 7L, TimeUnit.MINUTES);
 }

@@ -12,5 +12,7 @@ public class UserHttpUri extends HttpUri {
     
     public static final String LOGOUT = "/api/user/v1/logout";
     
+    public static final String REFRESH = "/api/user/v1/login/refresh";
+    
     public static final String REGISTER = "/api/user/v1/register";
 }

@@ -68,37 +68,6 @@ public class Result<T> {
         return new Result<>(code, message, data);
     }
     
-    // forbidden
-    public static Result forbidden() {
-        return success(FORBIDDEN.code, FORBIDDEN.message, null);
-    }
-    
-    public static Result forbidden(String message) {
-        return success(FORBIDDEN.code, message, null);
-    }
-    
-    public static <T> Result<T> forbidden(T data) {
-        return failure(FORBIDDEN.code, FORBIDDEN.message, data);
-    }
-    
-    public static <T> Result<T> forbidden(String message, T data) {
-        return failure(FORBIDDEN.code, message, data);
-    }
-    
-    // unauthorized
-    public static Result unauthorized() {
-        return success(UNAUTHORIZED.code, UNAUTHORIZED.message, null);
-    }
-    
-    public static Result unauthorized(String message) {
-        return success(UNAUTHORIZED.code, message, null);
-    }
-    
-    public static <T> Result<T> unauthorized(T data) {
-        return failure(UNAUTHORIZED.code, UNAUTHORIZED.message, data);
-    }
-    
-    
     public static final Result SUCCESS = new Result(200, "success");
     
     public static final Result FAILURE = new Result(400, "failure");
@@ -108,6 +77,8 @@ public class Result<T> {
     public static final Result FORBIDDEN = new Result(403, "forbidden");
     
     public static final Result NOT_FOUND = new Result(404, "not found");
+    
+    public static final Result TOKEN_EXPIRED = new Result(461, "access token expired");
     
     public static final Result INTERNAL_SERVER_ERROR = new Result(500, "internal server error");
     

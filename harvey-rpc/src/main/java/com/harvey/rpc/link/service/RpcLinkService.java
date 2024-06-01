@@ -1,7 +1,6 @@
 package com.harvey.rpc.link.service;
 
-import com.harvey.rpc.link.entity.rep.LinkGroupCountRep;
-import com.harvey.rpc.link.entity.req.LinkGroupCountReq;
+import com.harvey.rpc.link.entity.dto.LinkGroupCountDto;
 
 import java.util.List;
 
@@ -11,5 +10,5 @@ import java.util.List;
  * @Date 2024-05-31
  */
 public interface RpcLinkService {
-    List<LinkGroupCountRep> countLink(List<String> gidList);
+    List<LinkGroupCountDto> countLink(List<String> gidList);
 }

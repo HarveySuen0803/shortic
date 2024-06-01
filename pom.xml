@@ -17,9 +17,12 @@
         <module>harvey-user-common</module>
         <module>harvey-shortic-link</module>
         <module>harvey-shortic-group</module>
-        <module>harvey-shortic-log</module>
+        <module>harvey-log</module>
         <module>harvey-shortic-link-common</module>
         <module>harvey-shortic-group-common</module>
+        <module>harvey-security</module>
+        <module>harvey-database</module>
+        <module>harvey-cache</module>
     </modules>
 
     <properties>

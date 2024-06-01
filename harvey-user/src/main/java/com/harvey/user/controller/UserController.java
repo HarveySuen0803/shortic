@@ -1,23 +1,28 @@
 package com.harvey.user.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.harvey.common.result.Result;
+import cn.hutool.jwt.JWT;
 import com.harvey.common.exception.ClientException;
+import com.harvey.common.result.Result;
+import com.harvey.user.common.UserConstant;
 import com.harvey.user.common.UserResult;
 import com.harvey.user.entity.domain.UserDo;
 import com.harvey.user.entity.dto.UserRegisterDto;
+import com.harvey.user.entity.vo.UserRefreshTokenVo;
 import com.harvey.user.entity.vo.UserVo;
 import com.harvey.user.service.UserService;
+import com.harvey.security.support.AuthenticationTokenUtil;
 import jakarta.annotation.Resource;
 import org.redisson.api.RBloomFilter;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 /**
  * @Author harvey
@@ -38,8 +43,8 @@ public class UserController {
     private RBloomFilter userBloomFilter;
     
     @Transactional
-    @PostMapping("/api/user/v1/register")
-    public Result<Void> register(UserRegisterDto userRegisterDto) {
+    @PostMapping(path = "/api/user/v1/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Result<Void> register(@ModelAttribute UserRegisterDto userRegisterDto) {
         boolean isUserExist = userService.isUserExists(userRegisterDto.getUsername(), userRegisterDto.getEmail());
         if (isUserExist) {
             throw new ClientException(UserResult.USER_NOT_FOUND);
@@ -56,6 +61,29 @@ public class UserController {
         userBloomFilter.add(userDo.getId());
         
         return Result.success();
+    }
+    
+    @PostMapping(path = "/api/user/v1/login/refresh", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Result<UserRefreshTokenVo> refreshToken(@RequestParam String refreshToken) {
+        JWT refreshTokenJwt = JWT.of(refreshToken).setKey(UserConstant.REFRESH_TOKEN_KEY);
+        
+        if (!refreshTokenJwt.verify()) {
+            throw new ClientException(Result.FORBIDDEN);
+        }
+        
+        String username = refreshTokenJwt.getPayload(UserConstant.USERNAME).toString();
+        
+        UserDo userDo = userService.getUserDo(username);
+        Long userId = userDo.getId();
+        String password = userDo.getPassword();
+        Collection<? extends GrantedAuthority> authorities = userDo.getAuthorities();
+        
+        String accessToken = AuthenticationTokenUtil.genAccessToken(userId, username, password, authorities);
+        
+        UserRefreshTokenVo userRefreshTokenVo = new UserRefreshTokenVo();
+        userRefreshTokenVo.setAccessToken(accessToken);
+        
+        return Result.success(userRefreshTokenVo);
     }
 
     @GetMapping("/api/user/v1/{username}")

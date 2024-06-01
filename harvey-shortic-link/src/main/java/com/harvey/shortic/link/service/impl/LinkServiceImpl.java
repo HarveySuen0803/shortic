@@ -4,12 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.exception.ServerException;
 import com.harvey.common.result.link.LinkResult;
 import com.harvey.common.support.HashBase62Util;
-import com.harvey.rpc.link.entity.rep.LinkGroupCountRep;
-import com.harvey.rpc.link.entity.req.LinkGroupCountReq;
+import com.harvey.rpc.link.entity.dto.LinkGroupCountDto;
 import com.harvey.rpc.link.service.RpcLinkService;
 import com.harvey.shortic.link.common.LinkConstant;
 import com.harvey.shortic.link.entitiy.domain.LinkDo;
-import com.harvey.shortic.link.entitiy.vo.LinkGroupCountVo;
 import com.harvey.shortic.link.mapper.LinkMapper;
 import com.harvey.shortic.link.service.LinkService;
 import jakarta.annotation.Resource;
@@ -83,18 +81,18 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDo> implements 
     }
     
     @Override
-    public List<LinkGroupCountRep> countLink(List<String> gidList) {
+    public List<LinkGroupCountDto> countLink(List<String> gidList) {
         List<Map<String, Object>> linkDoMapList = linkMapper.countLink(gidList);
         
-        List<LinkGroupCountRep> linkGroupCountRepList = linkDoMapList.stream()
+        List<LinkGroupCountDto> linkGroupCountDtoList = linkDoMapList.stream()
             .map(linkDoMap -> {
-                LinkGroupCountRep linkGroupCountRep = new LinkGroupCountRep();
-                linkGroupCountRep.setGid((String) linkDoMap.get("gid"));
-                linkGroupCountRep.setCount((Long) linkDoMap.get("gid_cnt"));
-                return linkGroupCountRep;
+                LinkGroupCountDto linkGroupCountDto = new LinkGroupCountDto();
+                linkGroupCountDto.setGid((String) linkDoMap.get("gid"));
+                linkGroupCountDto.setCount((Long) linkDoMap.get("gid_cnt"));
+                return linkGroupCountDto;
             })
             .toList();
         
-        return linkGroupCountRepList;
+        return linkGroupCountDtoList;
     }
 }

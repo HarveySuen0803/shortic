@@ -13,5 +13,7 @@ public class LoginVo {
     
     String username;
     
-    String token;
+    String accessToken;
+    
+    String refreshToken;
 }

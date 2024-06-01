@@ -17,16 +17,4 @@ public class Constant {
     public static final Long PAGE_NO = 0L;
     
     public static final Long PAGE_SIZE = 10L;
-    
-    public static final byte[] LOGIN_TOKEN_KEY = "login_token_key".getBytes();
-    
-    public static final String USER_DETAILS = "userDetails";
-    
-    public static final String USER_ID = "userId";
-    
-    public static final String USERNAME = "username";
-    
-    public static final String PASSWORD = "password";
-    
-    public static final String AUTHORITIES = "authorities";
 }

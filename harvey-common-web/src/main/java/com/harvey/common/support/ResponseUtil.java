@@ -1,9 +1,9 @@
 package com.harvey.common.support;
 
 import com.alibaba.fastjson2.JSON;
-import com.harvey.common.constant.MediaType;
 import com.harvey.common.result.Result;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class ResponseUtil {
     public static <T> void write(HttpServletResponse response, Result<T> result) {
         try {
-            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.getWriter().write(JSON.toJSONString(result));
         } catch (IOException e) {
             throw new RuntimeException(e);

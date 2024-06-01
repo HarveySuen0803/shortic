@@ -5,7 +5,7 @@ import cn.hutool.core.util.ObjUtil;
 import com.harvey.common.constant.Constant;
 import com.harvey.common.result.Result;
 import com.harvey.common.exception.ClientException;
-import com.harvey.shortic.group.support.UserContextHolder;
+import com.harvey.security.support.UserContextHolder;
 import com.harvey.shortic.group.entity.domain.GroupDo;
 import com.harvey.shortic.group.entity.dto.GroupAddDto;
 import com.harvey.shortic.group.entity.dto.GroupDeleteDto;

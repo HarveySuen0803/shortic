@@ -10,6 +10,8 @@ import com.harvey.user.entity.vo.UserVo;
  * @Date 2024-05-22
  */
 public interface UserService extends IService<UserDo> {
+    UserDo getUserDo(String username);
+    
     UserVo getUserVo(String username);
     
     boolean isUserExists(String username, String email);

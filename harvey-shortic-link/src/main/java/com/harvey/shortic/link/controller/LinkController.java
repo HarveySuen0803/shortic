@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.common.constant.Constant;
 import com.harvey.common.result.Result;
-import com.harvey.rpc.link.entity.rep.LinkGroupCountRep;
+import com.harvey.rpc.link.entity.dto.LinkGroupCountDto;
 import com.harvey.shortic.link.entitiy.domain.LinkDo;
 import com.harvey.shortic.link.entitiy.dto.LinkAddDto;
 import com.harvey.shortic.link.entitiy.dto.LinkPageDto;
@@ -76,9 +76,9 @@ public class LinkController {
     }
     
     @PostMapping("/api/shortic/link/v1/count")
-    public Result<List<LinkGroupCountRep>> countLink(@RequestBody List<String> gidList) {
-        List<LinkGroupCountRep> linkGroupCountRepList = linkService.countLink(gidList);
+    public Result<List<LinkGroupCountDto>> countLink(@RequestBody List<String> gidList) {
+        List<LinkGroupCountDto> linkGroupCountDtoList = linkService.countLink(gidList);
         
-        return Result.success(linkGroupCountRepList);
+        return Result.success(linkGroupCountDtoList);
     }
 }

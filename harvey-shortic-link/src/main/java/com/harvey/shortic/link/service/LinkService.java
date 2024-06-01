@@ -1,7 +1,7 @@
 package com.harvey.shortic.link.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.harvey.rpc.link.entity.rep.LinkGroupCountRep;
+import com.harvey.rpc.link.entity.dto.LinkGroupCountDto;
 import com.harvey.shortic.link.entitiy.domain.LinkDo;
 
 import java.util.List;
@@ -18,5 +18,5 @@ public interface LinkService extends IService<LinkDo> {
     
     boolean isShortUriNotExists(String shortUri);
     
-    List<LinkGroupCountRep> countLink(List<String> gidList);
+    List<LinkGroupCountDto> countLink(List<String> gidList);
 }

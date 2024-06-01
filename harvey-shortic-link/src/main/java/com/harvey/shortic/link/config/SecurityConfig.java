@@ -1,6 +1,6 @@
 package com.harvey.shortic.link.config;
 
-import com.harvey.shortic.link.filter.LoginTokenFilter;
+import com.harvey.security.support.AuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,9 +16,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
     @Bean
-    SecurityFilterChain securityFilterChain(
+    public SecurityFilterChain securityFilterChain(
         HttpSecurity httpSecurity,
-        LoginTokenFilter loginTokenFilter
+        AuthenticationFilter authenticationFilter
     ) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.cors(AbstractHttpConfigurer::disable);
@@ -27,8 +27,13 @@ public class SecurityConfig {
             authorize.anyRequest().authenticated();
         });
         
-        httpSecurity.addFilterBefore(loginTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         
         return httpSecurity.build();
+    }
+    
+    @Bean
+    public AuthenticationFilter authenticationFilter() {
+        return new AuthenticationFilter();
     }
 }
