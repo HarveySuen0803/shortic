@@ -11,8 +11,7 @@
 
     <modules>
         <module>harvey-common</module>
-        <module>harvey-common-web</module>
-        <module>harvey-rpc</module>
+        <module>harvey-web-common</module>
         <module>harvey-user</module>
         <module>harvey-user-common</module>
         <module>harvey-shortic-link</module>
@@ -23,6 +22,9 @@
         <module>harvey-security</module>
         <module>harvey-database</module>
         <module>harvey-cache</module>
+        <module>harvey-shortic-link-rpc</module>
+        <module>harvey-shortic-group-rpc</module>
+        <module>harvey-user-rpc</module>
     </modules>
 
     <properties>

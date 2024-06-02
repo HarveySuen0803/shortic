@@ -25,12 +25,12 @@
         </dependency>
         <dependency>
             <groupId>com.harvey</groupId>
-            <artifactId>harvey-log</artifactId>
+            <artifactId>harvey-shortic-link-rpc</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.harvey</groupId>
-            <artifactId>harvey-rpc</artifactId>
+            <artifactId>harvey-log</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

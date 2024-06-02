@@ -1,6 +1,6 @@
 package com.harvey.shortic.group.mapper;
 
-import com.harvey.shortic.group.entity.domain.GroupDo;
+import com.harvey.shortic.group.common.entity.domain.GroupDo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

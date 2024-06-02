@@ -2,7 +2,7 @@ package com.harvey.shortic.group.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.support.RandomStringGenerator;
-import com.harvey.shortic.group.entity.domain.GroupDo;
+import com.harvey.shortic.group.common.entity.domain.GroupDo;
 import com.harvey.shortic.group.mapper.GroupMapper;
 import com.harvey.shortic.group.service.GroupService;
 import org.springframework.stereotype.Service;

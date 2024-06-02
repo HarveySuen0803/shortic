@@ -1,8 +1,11 @@
 package com.harvey.shortic.link.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.harvey.rpc.link.entity.dto.LinkGroupCountDto;
-import com.harvey.shortic.link.entitiy.domain.LinkDo;
+import com.harvey.shortic.link.common.entity.domain.LinkDo;
+import com.harvey.shortic.link.common.entity.dto.LinkPageDto;
+import com.harvey.shortic.link.common.entity.vo.LinkPageVo;
+import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
+import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
 
 import java.util.List;
 
@@ -12,11 +15,15 @@ import java.util.List;
  * @Date 2024-05-29
  */
 public interface LinkService extends IService<LinkDo> {
+    void addLink(LinkAddDto linkAddDto);
+    
+    LinkPageVo pageLink(LinkPageDto linkPageDto);
+    
     String getShortUri(String longUrl);
     
     boolean isShortUriExists(String shortUri);
     
     boolean isShortUriNotExists(String shortUri);
     
-    List<LinkGroupCountDto> countLink(List<String> gidList);
+    List<LinkGroupCountVo> countLink(List<String> gidList);
 }

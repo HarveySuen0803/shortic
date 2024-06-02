@@ -3,11 +3,11 @@ package com.harvey.log.aspect;
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
-import com.harvey.common.result.Result;
 import com.harvey.common.exception.ServerException;
-import com.harvey.common.support.HttpServletRequestProvider;
-import com.harvey.log.constant.ApiLogConstant;
+import com.harvey.common.result.Result;
 import com.harvey.log.anno.ApiLog;
+import com.harvey.log.constant.ApiLogConstant;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -25,15 +25,17 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ApiLogAspect {
+    @Resource
+    private HttpServletRequest request;
+    
     @Around("execution(* com.harvey..controller..*(..))")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest req = HttpServletRequestProvider.get();
-        if (ObjUtil.isNull(req)) {
+        if (ObjUtil.isNull(request)) {
             throw new ServerException(Result.INTERNAL_SERVER_ERROR);
         }
         
-        String reqUri = req.getRequestURI();
-        String reqMethod = req.getMethod();
+        String reqUri = request.getRequestURI();
+        String reqMethod = request.getMethod();
         
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String methodName = signature.getName();

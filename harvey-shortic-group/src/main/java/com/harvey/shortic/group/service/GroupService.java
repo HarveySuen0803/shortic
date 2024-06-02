@@ -1,7 +1,7 @@
 package com.harvey.shortic.group.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.harvey.shortic.group.entity.domain.GroupDo;
+import com.harvey.shortic.group.common.entity.domain.GroupDo;
 
 /**
  * @Author harvey

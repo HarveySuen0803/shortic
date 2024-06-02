@@ -1,7 +1,7 @@
 package com.harvey.user.config;
 
 import com.harvey.security.support.AuthenticationFilter;
-import com.harvey.user.common.UserHttpUri;
+import com.harvey.user.common.constant.UserHttpUri;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

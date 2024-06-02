@@ -2,10 +2,10 @@ package com.harvey.user.support;
 
 import com.harvey.common.result.Result;
 import com.harvey.common.support.ResponseUtil;
+import com.harvey.security.entity.dto.UserDetailsDto;
 import com.harvey.security.support.AuthenticationTokenUtil;
-import com.harvey.user.common.UserCacheKey;
-import com.harvey.user.entity.domain.UserDo;
-import com.harvey.user.entity.vo.LoginVo;
+import com.harvey.user.common.constant.UserCacheKey;
+import com.harvey.user.common.entity.vo.LoginVo;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,11 +31,11 @@ public class GlobalAuthenticationSuccessHandler implements AuthenticationSuccess
     
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        UserDo userDo = (UserDo) authentication.getPrincipal();
-        Long userId = userDo.getId();
-        String username = userDo.getUsername();
-        String password = userDo.getPassword();
-        Collection<? extends GrantedAuthority> authorities = userDo.getAuthorities();
+        UserDetailsDto userDetailsDto = (UserDetailsDto) authentication.getPrincipal();
+        Long userId = userDetailsDto.getId();
+        String username = userDetailsDto.getUsername();
+        String password = userDetailsDto.getPassword();
+        Collection<? extends GrantedAuthority> authorities = userDetailsDto.getAuthorities();
         
         String accessToken = AuthenticationTokenUtil.genAccessToken(userId, username, password, authorities);
         
