@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
 import com.alibaba.fastjson2.JSON;
-import com.harvey.user.common.constant.UserConstant;
+import com.harvey.security.constant.SecurityConstant;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -24,14 +24,14 @@ public class AuthenticationTokenUtil {
         
         HashMap<String, Object> accessTokenPayload = new HashMap<>();
         accessTokenPayload.put(JWTPayload.ISSUED_AT, DateTime.now());
-        accessTokenPayload.put(JWTPayload.EXPIRES_AT, DateTime.now().offset(UserConstant.LOGIN_TOKEN_TIMEOUT_UNIT, UserConstant.LOGIN_TOKEN_TIMEOUT));
+        accessTokenPayload.put(JWTPayload.EXPIRES_AT, DateTime.now().offset(SecurityConstant.LOGIN_TOKEN_TIMEOUT_UNIT, SecurityConstant.LOGIN_TOKEN_TIMEOUT));
         accessTokenPayload.put(JWTPayload.NOT_BEFORE, DateTime.now());
-        accessTokenPayload.put(UserConstant.USER_ID, userId);
-        accessTokenPayload.put(UserConstant.USERNAME, username);
-        accessTokenPayload.put(UserConstant.PASSWORD, password);
-        accessTokenPayload.put(UserConstant.AUTHORITIES, authoritiesJson);
+        accessTokenPayload.put(SecurityConstant.USER_ID, userId);
+        accessTokenPayload.put(SecurityConstant.USERNAME, username);
+        accessTokenPayload.put(SecurityConstant.PASSWORD, password);
+        accessTokenPayload.put(SecurityConstant.AUTHORITIES, authoritiesJson);
         
-        String accessToken = JWTUtil.createToken(accessTokenPayload, UserConstant.ACCESS_TOKEN_KEY);
+        String accessToken = JWTUtil.createToken(accessTokenPayload, SecurityConstant.ACCESS_TOKEN_KEY);
         
         return accessToken;
     }
@@ -41,10 +41,10 @@ public class AuthenticationTokenUtil {
      */
     public static String genRefreshToken(Long userId, String username) {
         HashMap<String, Object> refreshTokenPayload = new HashMap<>();
-        refreshTokenPayload.put(UserConstant.USER_ID, userId);
-        refreshTokenPayload.put(UserConstant.USERNAME, username);
+        refreshTokenPayload.put(SecurityConstant.USER_ID, userId);
+        refreshTokenPayload.put(SecurityConstant.USERNAME, username);
         
-        String refreshToken = JWTUtil.createToken(refreshTokenPayload, UserConstant.REFRESH_TOKEN_KEY);
+        String refreshToken = JWTUtil.createToken(refreshTokenPayload, SecurityConstant.REFRESH_TOKEN_KEY);
         
         return refreshToken;
     }

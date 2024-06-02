@@ -6,7 +6,7 @@ import cn.hutool.jwt.JWT;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.user.common.constant.UserCacheKey;
-import com.harvey.user.common.constant.UserConstant;
+import com.harvey.security.constant.SecurityConstant;
 import com.harvey.user.common.constant.UserResult;
 import com.harvey.user.common.entity.domain.UserDo;
 import com.harvey.user.common.entity.dto.UserRegisterDto;
@@ -85,7 +85,7 @@ public class AuthController {
         }
         
         // If the access_token is incorrect, deny access directly.
-        JWT accessTokenJwt = JWT.of(accessToken).setKey(UserConstant.ACCESS_TOKEN_KEY);
+        JWT accessTokenJwt = JWT.of(accessToken).setKey(SecurityConstant.ACCESS_TOKEN_KEY);
         if (!accessTokenJwt.verify()) {
             throw new ClientException(Result.UNAUTHORIZED);
         }
@@ -96,13 +96,13 @@ public class AuthController {
         }
         
         // If the refresh_token is incorrect, deny access directly.
-        JWT refreshTokenJwt = JWT.of(refreshToken).setKey(UserConstant.REFRESH_TOKEN_KEY);
+        JWT refreshTokenJwt = JWT.of(refreshToken).setKey(SecurityConstant.REFRESH_TOKEN_KEY);
         if (!refreshTokenJwt.verify()) {
             throw new ClientException(Result.UNAUTHORIZED);
         }
         
-        String username = refreshTokenJwt.getPayload(UserConstant.USERNAME).toString();
-        Long userId = Long.valueOf(refreshTokenJwt.getPayload(UserConstant.USER_ID).toString());
+        String username = refreshTokenJwt.getPayload(SecurityConstant.USERNAME).toString();
+        Long userId = Long.valueOf(refreshTokenJwt.getPayload(SecurityConstant.USER_ID).toString());
         
         // If the access_token is inconsistent with the access_token stored in Redis, deny access directly.
         String accessTokenCacheKey = UserCacheKey.ACCESS_TOKEN.getKey(userId);

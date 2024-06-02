@@ -7,7 +7,7 @@ import com.alibaba.fastjson2.TypeReference;
 import com.harvey.common.result.Result;
 import com.harvey.common.support.ResponseUtil;
 import com.harvey.user.common.constant.UserCacheKey;
-import com.harvey.user.common.constant.UserConstant;
+import com.harvey.security.constant.SecurityConstant;
 import com.harvey.user.common.constant.UserHttpUri;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -52,7 +52,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
         
         // If the access_token is incorrect, deny access directly.
-        JWT accessTokenJwt = JWT.of(accessToken).setKey(UserConstant.ACCESS_TOKEN_KEY);
+        JWT accessTokenJwt = JWT.of(accessToken).setKey(SecurityConstant.ACCESS_TOKEN_KEY);
         if (!accessTokenJwt.verify()) {
             ResponseUtil.write(response, Result.UNAUTHORIZED);
             return;
@@ -65,10 +65,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
         
         // Get user info from token.
-        Long userId = Long.valueOf(accessTokenJwt.getPayload(UserConstant.USER_ID).toString());
-        String username = accessTokenJwt.getPayload(UserConstant.USERNAME).toString();
-        String password = accessTokenJwt.getPayload(UserConstant.PASSWORD).toString();
-        String authoritiesJson = accessTokenJwt.getPayload(UserConstant.AUTHORITIES).toString();
+        Long userId = Long.valueOf(accessTokenJwt.getPayload(SecurityConstant.USER_ID).toString());
+        String username = accessTokenJwt.getPayload(SecurityConstant.USERNAME).toString();
+        String password = accessTokenJwt.getPayload(SecurityConstant.PASSWORD).toString();
+        String authoritiesJson = accessTokenJwt.getPayload(SecurityConstant.AUTHORITIES).toString();
         Collection<? extends GrantedAuthority> authorities = JSON.parseObject(authoritiesJson, new TypeReference<>() {});
         
         // Set user info to UserContext.

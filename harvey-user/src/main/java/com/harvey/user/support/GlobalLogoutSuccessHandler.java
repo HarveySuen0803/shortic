@@ -5,7 +5,7 @@ import cn.hutool.jwt.JWT;
 import com.harvey.common.result.Result;
 import com.harvey.common.support.ResponseUtil;
 import com.harvey.user.common.constant.UserCacheKey;
-import com.harvey.user.common.constant.UserConstant;
+import com.harvey.security.constant.SecurityConstant;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,7 +38,7 @@ public class GlobalLogoutSuccessHandler implements LogoutSuccessHandler {
         }
         
         // If the access_token is incorrect, deny access directly.
-        JWT accessTokenJwt = JWT.of(accessToken).setKey(UserConstant.ACCESS_TOKEN_KEY);
+        JWT accessTokenJwt = JWT.of(accessToken).setKey(SecurityConstant.ACCESS_TOKEN_KEY);
         if (!accessTokenJwt.verify()) {
             ResponseUtil.write(response, Result.UNAUTHORIZED);
             return;
@@ -52,7 +52,7 @@ public class GlobalLogoutSuccessHandler implements LogoutSuccessHandler {
         
         // If the access_token is inconsistent with the access_token stored in Redis,
         // notify the client to obtain a new access_token.
-        Long userId = Long.valueOf(accessTokenJwt.getPayload(UserConstant.USER_ID).toString());
+        Long userId = Long.valueOf(accessTokenJwt.getPayload(SecurityConstant.USER_ID).toString());
         String loginTokenCacheKey = UserCacheKey.ACCESS_TOKEN.getKey(userId);
         String loginTokenCache = (String) redisTemplate.opsForValue().get(loginTokenCacheKey);
         if (!accessToken.equals(loginTokenCache)) {
