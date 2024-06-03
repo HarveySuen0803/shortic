@@ -5,8 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWT;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
-import com.harvey.user.common.constant.UserCacheKey;
+import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.security.constant.SecurityConstant;
+import com.harvey.security.constant.SecurityHttpUri;
 import com.harvey.user.common.constant.UserResult;
 import com.harvey.user.common.entity.domain.UserDo;
 import com.harvey.user.common.entity.dto.UserRegisterDto;
@@ -36,7 +37,7 @@ import java.util.Collection;
  * @Date 2024-06-02
  */
 @RestController
-public class AuthController {
+public class SecurityController {
     @Resource
     private UserService userService;
     
@@ -56,7 +57,7 @@ public class AuthController {
     private RBloomFilter userBloomFilter;
     
     @Transactional
-    @PostMapping(path = "/api/user/v1/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(path = SecurityHttpUri.REGISTER, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public Result<Void> register(@ModelAttribute UserRegisterDto userRegisterDto) {
         boolean isUserExist = userService.isUserExists(userRegisterDto.getUsername(), userRegisterDto.getEmail());
         if (isUserExist) {
@@ -76,7 +77,7 @@ public class AuthController {
         return Result.success();
     }
     
-    @PostMapping(path = "/api/user/v1/login/refresh", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(path = SecurityHttpUri.REFRESH, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public Result<UserRefreshTokenVo> refreshToken(@RequestParam String refreshToken) {
         // If the request header does not carry Login Token, deny access directly.
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -105,7 +106,7 @@ public class AuthController {
         Long userId = Long.valueOf(refreshTokenJwt.getPayload(SecurityConstant.USER_ID).toString());
         
         // If the access_token is inconsistent with the access_token stored in Redis, deny access directly.
-        String accessTokenCacheKey = UserCacheKey.ACCESS_TOKEN.getKey(userId);
+        String accessTokenCacheKey = SecurityCacheKey.ACCESS_TOKEN.getKey(userId);
         String accessTokenCache = (String) redisTemplate.opsForValue().get(accessTokenCacheKey);
         if (!accessToken.equals(accessTokenCache)) {
             throw new ClientException(Result.UNAUTHORIZED);

@@ -1,7 +1,7 @@
 package com.harvey.user.config;
 
 import com.harvey.security.support.AuthenticationFilter;
-import com.harvey.user.common.constant.UserHttpUri;
+import com.harvey.security.constant.SecurityHttpUri;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,12 +45,12 @@ public class SecurityConfig {
         httpSecurity.cors(AbstractHttpConfigurer::disable);
         
         httpSecurity.authorizeHttpRequests((authorize) -> {
-            authorize.requestMatchers(UserHttpUri.LOGIN, UserHttpUri.LOGOUT, UserHttpUri.REGISTER, UserHttpUri.REFRESH).permitAll()
+            authorize.requestMatchers(SecurityHttpUri.LOGIN, SecurityHttpUri.LOGOUT, SecurityHttpUri.REGISTER, SecurityHttpUri.REFRESH).permitAll()
                 .anyRequest().authenticated();
         });
         
         httpSecurity.formLogin((formLogin) -> {
-            formLogin.loginProcessingUrl(UserHttpUri.LOGIN)
+            formLogin.loginProcessingUrl(SecurityHttpUri.LOGIN)
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(authenticationSuccessHandler)
@@ -59,7 +59,7 @@ public class SecurityConfig {
         });
         
         httpSecurity.logout((logout) -> {
-            logout.logoutUrl(UserHttpUri.LOGOUT)
+            logout.logoutUrl(SecurityHttpUri.LOGOUT)
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .permitAll();
         });

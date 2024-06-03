@@ -4,7 +4,7 @@ import com.harvey.common.result.Result;
 import com.harvey.common.support.ResponseUtil;
 import com.harvey.security.entity.dto.UserDetailsDto;
 import com.harvey.security.support.AuthenticationTokenUtil;
-import com.harvey.user.common.constant.UserCacheKey;
+import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.user.common.entity.vo.LoginVo;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
@@ -40,15 +40,15 @@ public class GlobalAuthenticationSuccessHandler implements AuthenticationSuccess
         String accessToken = AuthenticationTokenUtil.genAccessToken(userId, username, password, authorities);
         
         redisTemplate.opsForValue().set(
-            UserCacheKey.ACCESS_TOKEN.getKey(userId),
+            SecurityCacheKey.ACCESS_TOKEN.getKey(userId),
             accessToken,
-            UserCacheKey.ACCESS_TOKEN.timeout,
-            UserCacheKey.ACCESS_TOKEN.unit
+            SecurityCacheKey.ACCESS_TOKEN.timeout,
+            SecurityCacheKey.ACCESS_TOKEN.unit
         );
         
         String refreshToken = AuthenticationTokenUtil.genRefreshToken(userId, username);
         redisTemplate.opsForValue().set(
-            UserCacheKey.REFRESH_TOKEN.getKey(userId),
+            SecurityCacheKey.REFRESH_TOKEN.getKey(userId),
             refreshToken
         );
         

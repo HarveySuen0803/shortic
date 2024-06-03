@@ -6,9 +6,9 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.harvey.common.result.Result;
 import com.harvey.common.support.ResponseUtil;
-import com.harvey.user.common.constant.UserCacheKey;
+import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.security.constant.SecurityConstant;
-import com.harvey.user.common.constant.UserHttpUri;
+import com.harvey.security.constant.SecurityHttpUri;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -39,7 +39,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // If the request is login, then skip the filter.
         String requestUri = request.getRequestURI();
-        if (StrUtil.equals(requestUri, UserHttpUri.LOGIN) || StrUtil.equals(requestUri, UserHttpUri.REFRESH)) {
+        if (StrUtil.equals(requestUri, SecurityHttpUri.LOGIN) || StrUtil.equals(requestUri, SecurityHttpUri.REFRESH)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -77,9 +77,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         
         // If the access_token is inconsistent with the access_token stored in Redis,
         // notify the client to obtain a new access_token.
-        String loginTokenCacheKey = UserCacheKey.ACCESS_TOKEN.getKey(userId);
-        String loginTokenCache = (String) redisTemplate.opsForValue().get(loginTokenCacheKey);
-        if (!accessToken.equals(loginTokenCache)) {
+        String accessTokenKey = SecurityCacheKey.ACCESS_TOKEN.getKey(userId);
+        String accessTokenCache = (String) redisTemplate.opsForValue().get(accessTokenKey);
+        if (!accessToken.equals(accessTokenCache)) {
             ResponseUtil.write(response, Result.TOKEN_EXPIRED);
             return;
         }

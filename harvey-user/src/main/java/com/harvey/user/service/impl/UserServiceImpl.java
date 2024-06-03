@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.constant.Constant;
 import com.harvey.common.exception.ClientException;
 import com.harvey.security.support.AuthenticationTokenUtil;
-import com.harvey.user.common.constant.UserCacheKey;
+import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.user.common.constant.UserResult;
 import com.harvey.user.common.entity.domain.UserDo;
 import com.harvey.user.common.entity.vo.UserVo;
@@ -34,10 +34,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         String accessToken = AuthenticationTokenUtil.genAccessToken(userId, username, password, authorities);
         
         redisTemplate.opsForValue().set(
-            UserCacheKey.ACCESS_TOKEN.getKey(userId),
+            SecurityCacheKey.ACCESS_TOKEN.getKey(userId),
             accessToken,
-            UserCacheKey.ACCESS_TOKEN.timeout,
-            UserCacheKey.ACCESS_TOKEN.unit
+            SecurityCacheKey.ACCESS_TOKEN.timeout,
+            SecurityCacheKey.ACCESS_TOKEN.unit
         );
         
         return accessToken;
@@ -48,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         String refreshToken = AuthenticationTokenUtil.genRefreshToken(userId, username);
         
         redisTemplate.opsForValue().set(
-            UserCacheKey.REFRESH_TOKEN.getKey(userId),
+            SecurityCacheKey.REFRESH_TOKEN.getKey(userId),
             refreshToken
         );
         
