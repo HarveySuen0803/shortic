@@ -60,7 +60,7 @@ public class GroupController {
         
         List<GroupPo> groupPoList = groupService.lambdaQuery()
             .eq(GroupPo::getUserId, userId)
-            .eq(GroupPo::getIsDeleted, Constant.NOT_DELETED)
+            .eq(GroupPo::getDeletedFlag, Constant.NOT_DELETED)
             .list();
         
         List<GroupVo> groupVoList = groupPoList.stream()
@@ -80,7 +80,7 @@ public class GroupController {
         GroupPo groupPo = groupService.lambdaQuery()
             .eq(GroupPo::getGid, gid)
             .eq(GroupPo::getUserId, userId)
-            .eq(GroupPo::getIsDeleted, Constant.NOT_DELETED)
+            .eq(GroupPo::getDeletedFlag, Constant.NOT_DELETED)
             .one();
         if (ObjUtil.isNull(groupPo)) {
             throw new ClientException(GroupResult.GROUP_NOT_FOUND);
@@ -102,13 +102,13 @@ public class GroupController {
         GroupPo groupPo = groupService.lambdaQuery()
             .eq(GroupPo::getGid, gid)
             .eq(GroupPo::getUserId, userId)
-            .eq(GroupPo::getIsDeleted, Constant.NOT_DELETED)
+            .eq(GroupPo::getDeletedFlag, Constant.NOT_DELETED)
             .one();
         if (ObjUtil.isNull(groupPo)) {
             throw new ClientException(GroupResult.GROUP_NOT_FOUND);
         }
         
-        groupPo.setIsDeleted(Constant.DELETED);
+        groupPo.setDeletedFlag(Constant.DELETED);
         
         groupService.saveOrUpdate(groupPo);
         
@@ -127,7 +127,7 @@ public class GroupController {
         List<GroupPo> groupPoList = groupService.lambdaQuery()
             .in(GroupPo::getGid, gidList)
             .eq(GroupPo::getUserId, userId)
-            .eq(GroupPo::getIsDeleted, Constant.NOT_DELETED)
+            .eq(GroupPo::getDeletedFlag, Constant.NOT_DELETED)
             .list();
         
         Map<String, Integer> gidToSortMap = groupSortDtoList.stream()

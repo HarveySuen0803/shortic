@@ -115,8 +115,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements 
         
         lambdaQuery()
             .eq(LinkPo::getGid, gid)
-            .eq(LinkPo::getIsDeleted, Constant.NOT_DELETED)
-            .eq(LinkPo::getIsEnabled, Constant.ENABLED)
+            .eq(LinkPo::getDeletedFlag, Constant.NOT_DELETED)
             .page(page);
         
         List<LinkPo> linkPoList = page.getRecords();
