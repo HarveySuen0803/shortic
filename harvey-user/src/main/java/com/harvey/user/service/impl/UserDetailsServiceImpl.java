@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.security.entity.dto.UserDetailsDto;
 import com.harvey.user.common.constant.UserResult;
-import com.harvey.user.common.entity.domain.*;
+import com.harvey.user.common.entity.po.*;
 import com.harvey.user.service.*;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.GrantedAuthority;
@@ -43,17 +43,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDo userDo = userService.lambdaQuery()
-            .eq(UserDo::getUsername, username)
+        UserPo userPo = userService.lambdaQuery()
+            .eq(UserPo::getUsername, username)
             .one();
-        if (userDo == null) {
+        if (userPo == null) {
             throw new ClientException(UserResult.USER_NOT_FOUND);
         }
         
-        UserDetailsDto userDetailsDto = BeanUtil.copyProperties(userDo, UserDetailsDto.class);
+        UserDetailsDto userDetailsDto = BeanUtil.copyProperties(userPo, UserDetailsDto.class);
         
         // Get authorities
-        Long userId = userDo.getId();
+        Long userId = userPo.getId();
         Set<String> authNameSet = getAuthNameSet(userId);
         List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(authNameSet);
         
@@ -74,12 +74,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         authIdSet.addAll(authIdSetFromAuthTable);
         authIdSet.addAll(authIdSetFromRoleTable);
         
-        List<AuthDo> authDolist = authService.lambdaQuery()
-            .in(AuthDo::getId, authIdSet)
+        List<AuthPo> authPolist = authService.lambdaQuery()
+            .in(AuthPo::getId, authIdSet)
             .list();
         
-        Set<String> authNameSet = authDolist.stream()
-            .map(AuthDo::getName)
+        Set<String> authNameSet = authPolist.stream()
+            .map(AuthPo::getName)
             .collect(Collectors.toSet());
         
         return authNameSet;
@@ -89,13 +89,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * Get AuthIdSet from t_user_auth by UserId.
      */
     private Set<Long> getAuthIdSetFromAuthTable(Long userId) {
-        List<UserAuthDo> userAuthDoList = userAuthService.lambdaQuery()
-            .eq(UserAuthDo::getUserId, userId)
-            .select(UserAuthDo::getAuthId)
+        List<UserAuthPo> userAuthPoList = userAuthService.lambdaQuery()
+            .eq(UserAuthPo::getUserId, userId)
+            .select(UserAuthPo::getAuthId)
             .list();
         
-        Set<Long> authIdSet = userAuthDoList.stream()
-            .map(UserAuthDo::getAuthId)
+        Set<Long> authIdSet = userAuthPoList.stream()
+            .map(UserAuthPo::getAuthId)
             .collect(Collectors.toSet());
         
         return authIdSet;
@@ -105,21 +105,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * Get RoleIdSet from t_user_role by UserId, then get AuthIdSet from t_role_auth by RoleIdSet.
      */
     private Set<Long> getAuthIdSetFromRoleTable(Long userId) {
-        List<UserRoleDo> userRoleDoList = userRoleService.lambdaQuery()
-            .eq(UserRoleDo::getUserId, userId)
-            .select(UserRoleDo::getRoleId)
+        List<UserRolePo> userRolePoList = userRoleService.lambdaQuery()
+            .eq(UserRolePo::getUserId, userId)
+            .select(UserRolePo::getRoleId)
             .list();
         
-        Set<Long> roleIdSet = userRoleDoList.stream()
-            .map(UserRoleDo::getRoleId)
+        Set<Long> roleIdSet = userRolePoList.stream()
+            .map(UserRolePo::getRoleId)
             .collect(Collectors.toSet());
         
-        List<RoleAuthDo> roleAuthDoList = roleAuthService.lambdaQuery()
-            .in(RoleAuthDo::getRoleId, roleIdSet)
+        List<RoleAuthPo> roleAuthPoList = roleAuthService.lambdaQuery()
+            .in(RoleAuthPo::getRoleId, roleIdSet)
             .list();
         
-        Set<Long> authIdSet = roleAuthDoList.stream()
-            .map(RoleAuthDo::getAuthId)
+        Set<Long> authIdSet = roleAuthPoList.stream()
+            .map(RoleAuthPo::getAuthId)
             .collect(Collectors.toSet());
         
         return authIdSet;

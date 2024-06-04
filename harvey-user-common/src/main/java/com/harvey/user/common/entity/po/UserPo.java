@@ -1,4 +1,4 @@
-package com.harvey.user.common.entity.domain;
+package com.harvey.user.common.entity.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("t_user")
-public class UserDo implements Serializable {
+public class UserPo implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     

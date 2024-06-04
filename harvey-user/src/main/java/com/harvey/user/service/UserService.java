@@ -1,7 +1,7 @@
 package com.harvey.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.harvey.user.common.entity.domain.UserDo;
+import com.harvey.user.common.entity.po.UserPo;
 import com.harvey.user.common.entity.vo.UserVo;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -12,7 +12,7 @@ import java.util.Collection;
  * @Email harveysuen0803@gmail.com
  * @Date 2024-05-22
  */
-public interface UserService extends IService<UserDo> {
+public interface UserService extends IService<UserPo> {
     /**
      * Build the access_token and cache it.
      */

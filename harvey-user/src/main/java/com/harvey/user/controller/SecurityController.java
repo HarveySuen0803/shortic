@@ -9,7 +9,7 @@ import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.security.constant.SecurityConstant;
 import com.harvey.security.constant.SecurityHttpUri;
 import com.harvey.user.common.constant.UserResult;
-import com.harvey.user.common.entity.domain.UserDo;
+import com.harvey.user.common.entity.po.UserPo;
 import com.harvey.user.common.entity.dto.UserRegisterDto;
 import com.harvey.user.common.entity.vo.UserRefreshTokenVo;
 import com.harvey.user.service.UserService;
@@ -64,15 +64,15 @@ public class SecurityController {
             throw new ClientException(UserResult.USER_NOT_FOUND);
         }
         
-        UserDo userDo = BeanUtil.copyProperties(userRegisterDto, UserDo.class);
+        UserPo userPo = BeanUtil.copyProperties(userRegisterDto, UserPo.class);
         
-        String password = userDo.getPassword();
+        String password = userPo.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
-        userDo.setPassword(encodedPassword);
+        userPo.setPassword(encodedPassword);
         
-        userService.saveOrUpdate(userDo);
+        userService.saveOrUpdate(userPo);
         
-        userBloomFilter.add(userDo.getId());
+        userBloomFilter.add(userPo.getId());
         
         return Result.success();
     }

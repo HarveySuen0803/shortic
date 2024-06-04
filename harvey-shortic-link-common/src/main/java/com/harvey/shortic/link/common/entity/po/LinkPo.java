@@ -1,4 +1,4 @@
-package com.harvey.shortic.link.common.entity.domain;
+package com.harvey.shortic.link.common.entity.po;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @TableName("t_link")
-public class LinkDo implements Serializable {
+public class LinkPo implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 

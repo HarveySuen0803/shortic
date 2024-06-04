@@ -1,7 +1,7 @@
 package com.harvey.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.harvey.user.common.entity.domain.RoleAuthDo;
+import com.harvey.user.common.entity.po.RoleAuthPo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date 2024-05-28
  */
 @Mapper
-public interface RoleAuthMapper extends BaseMapper<RoleAuthDo> {
+public interface RoleAuthMapper extends BaseMapper<RoleAuthPo> {
 }

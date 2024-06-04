@@ -2,7 +2,7 @@ package com.harvey.shortic.group.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.support.RandomStringGenerator;
-import com.harvey.shortic.group.common.entity.domain.GroupDo;
+import com.harvey.shortic.group.common.entity.po.GroupPo;
 import com.harvey.shortic.group.mapper.GroupMapper;
 import com.harvey.shortic.group.service.GroupService;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @Date 2024-05-28
  */
 @Service
-public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDo> implements GroupService {
+public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupPo> implements GroupService {
     @Override
     public String genGid() {
         return RandomStringGenerator.gen(6, true, true, false, false);
@@ -33,8 +33,8 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDo> implemen
     @Override
     public boolean isKeyExisted(String gid, Long userId) {
         boolean isExisted = lambdaQuery()
-            .eq(GroupDo::getGid, gid)
-            .eq(GroupDo::getUserId, userId)
+            .eq(GroupPo::getGid, gid)
+            .eq(GroupPo::getUserId, userId)
             .exists();
         
         return isExisted;

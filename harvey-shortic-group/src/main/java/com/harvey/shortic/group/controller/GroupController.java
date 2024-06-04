@@ -6,7 +6,7 @@ import com.harvey.common.constant.Constant;
 import com.harvey.common.result.Result;
 import com.harvey.common.exception.ClientException;
 import com.harvey.security.support.UserContextHolder;
-import com.harvey.shortic.group.common.entity.domain.GroupDo;
+import com.harvey.shortic.group.common.entity.po.GroupPo;
 import com.harvey.shortic.group.common.entity.dto.GroupAddDto;
 import com.harvey.shortic.group.common.entity.dto.GroupDeleteDto;
 import com.harvey.shortic.group.common.entity.dto.GroupSortDto;
@@ -44,11 +44,11 @@ public class GroupController {
         
         String gid = groupService.genUniqueGid(userId);
 
-        GroupDo groupDo = new GroupDo();
-        groupDo.setName(name);
-        groupDo.setGid(gid);
-        groupDo.setUserId(userId);
-        groupService.save(groupDo);
+        GroupPo groupPo = new GroupPo();
+        groupPo.setName(name);
+        groupPo.setGid(gid);
+        groupPo.setUserId(userId);
+        groupService.save(groupPo);
         
         return Result.success();
     }
@@ -58,13 +58,13 @@ public class GroupController {
     public Result<List<GroupVo>> listGroup() {
         Long userId = UserContextHolder.getUserId();
         
-        List<GroupDo> groupDoList = groupService.lambdaQuery()
-            .eq(GroupDo::getUserId, userId)
-            .eq(GroupDo::getIsDeleted, Constant.NOT_DELETED)
+        List<GroupPo> groupPoList = groupService.lambdaQuery()
+            .eq(GroupPo::getUserId, userId)
+            .eq(GroupPo::getIsDeleted, Constant.NOT_DELETED)
             .list();
         
-        List<GroupVo> groupVoList = groupDoList.stream()
-            .map(groupDo -> BeanUtil.copyProperties(groupDo, GroupVo.class))
+        List<GroupVo> groupVoList = groupPoList.stream()
+            .map(groupPo -> BeanUtil.copyProperties(groupPo, GroupVo.class))
             .toList();
         
         return Result.success(groupVoList);
@@ -77,18 +77,18 @@ public class GroupController {
         String gid = groupUpdateDto.getGid();
         String name = groupUpdateDto.getName();
         
-        GroupDo groupDo = groupService.lambdaQuery()
-            .eq(GroupDo::getGid, gid)
-            .eq(GroupDo::getUserId, userId)
-            .eq(GroupDo::getIsDeleted, Constant.NOT_DELETED)
+        GroupPo groupPo = groupService.lambdaQuery()
+            .eq(GroupPo::getGid, gid)
+            .eq(GroupPo::getUserId, userId)
+            .eq(GroupPo::getIsDeleted, Constant.NOT_DELETED)
             .one();
-        if (ObjUtil.isNull(groupDo)) {
+        if (ObjUtil.isNull(groupPo)) {
             throw new ClientException(GroupResult.GROUP_NOT_FOUND);
         }
         
-        groupDo.setName(name);
+        groupPo.setName(name);
         
-        groupService.saveOrUpdate(groupDo);
+        groupService.saveOrUpdate(groupPo);
         
         return Result.success();
     }
@@ -99,18 +99,18 @@ public class GroupController {
         String gid = groupDeleteDto.getGid();
         Long userId = UserContextHolder.getUserId();
         
-        GroupDo groupDo = groupService.lambdaQuery()
-            .eq(GroupDo::getGid, gid)
-            .eq(GroupDo::getUserId, userId)
-            .eq(GroupDo::getIsDeleted, Constant.NOT_DELETED)
+        GroupPo groupPo = groupService.lambdaQuery()
+            .eq(GroupPo::getGid, gid)
+            .eq(GroupPo::getUserId, userId)
+            .eq(GroupPo::getIsDeleted, Constant.NOT_DELETED)
             .one();
-        if (ObjUtil.isNull(groupDo)) {
+        if (ObjUtil.isNull(groupPo)) {
             throw new ClientException(GroupResult.GROUP_NOT_FOUND);
         }
         
-        groupDo.setIsDeleted(Constant.DELETED);
+        groupPo.setIsDeleted(Constant.DELETED);
         
-        groupService.saveOrUpdate(groupDo);
+        groupService.saveOrUpdate(groupPo);
         
         return Result.success();
     }
@@ -124,22 +124,22 @@ public class GroupController {
             .map(GroupSortDto::getGid)
             .toList();
         
-        List<GroupDo> groupDoList = groupService.lambdaQuery()
-            .in(GroupDo::getGid, gidList)
-            .eq(GroupDo::getUserId, userId)
-            .eq(GroupDo::getIsDeleted, Constant.NOT_DELETED)
+        List<GroupPo> groupPoList = groupService.lambdaQuery()
+            .in(GroupPo::getGid, gidList)
+            .eq(GroupPo::getUserId, userId)
+            .eq(GroupPo::getIsDeleted, Constant.NOT_DELETED)
             .list();
         
         Map<String, Integer> gidToSortMap = groupSortDtoList.stream()
             .collect(Collectors.toMap(GroupSortDto::getGid, GroupSortDto::getSort));
         
-        groupDoList = groupDoList.stream().peek(groupDo -> {
-            String gid = groupDo.getGid();
+        groupPoList = groupPoList.stream().peek(groupPo -> {
+            String gid = groupPo.getGid();
             Integer sort = gidToSortMap.get(gid);
-            groupDo.setSort(sort);
+            groupPo.setSort(sort);
         }).toList();
         
-        groupService.saveOrUpdateBatch(groupDoList);
+        groupService.saveOrUpdateBatch(groupPoList);
         
         return Result.success();
     }

@@ -1,4 +1,4 @@
-package com.harvey.shortic.group.common.entity.domain;
+package com.harvey.shortic.group.common.entity.po;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @TableName("t_group")
-public class GroupDo implements Serializable {
+public class GroupPo implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 

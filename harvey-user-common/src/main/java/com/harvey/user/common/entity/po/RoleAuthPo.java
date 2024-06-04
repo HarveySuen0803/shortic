@@ -1,4 +1,4 @@
-package com.harvey.user.common.entity.domain;
+package com.harvey.user.common.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -12,13 +12,13 @@ import java.io.Serializable;
  * @Date 2024-05-24
  */
 @Data
-@TableName("t_user_role")
-public class UserRoleDo implements Serializable {
+@TableName(value ="t_role_auth")
+public class RoleAuthPo implements Serializable {
     private Long id;
     
-    private Long userId;
-    
     private Long roleId;
+    
+    private Long authId;
     
     @Serial
     private static final long serialVersionUID = 1L;

@@ -1,6 +1,6 @@
 package com.harvey.user.mapper;
 
-import com.harvey.user.common.entity.domain.UserDo;
+import com.harvey.user.common.entity.po.UserPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date 2024-05-22
  */
 @Mapper
-public interface UserMapper extends BaseMapper<UserDo> {
+public interface UserMapper extends BaseMapper<UserPo> {
 }

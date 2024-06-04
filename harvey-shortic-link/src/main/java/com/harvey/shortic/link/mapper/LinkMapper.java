@@ -1,6 +1,6 @@
 package com.harvey.shortic.link.mapper;
 
-import com.harvey.shortic.link.common.entity.domain.LinkDo;
+import com.harvey.shortic.link.common.entity.po.LinkPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,7 +15,7 @@ import java.util.Map;
  * @Date 2024-05-29
  */
 @Mapper
-public interface LinkMapper extends BaseMapper<LinkDo> {
+public interface LinkMapper extends BaseMapper<LinkPo> {
     @MapKey("gid")
     List<Map<String, Object>> countLink(@Param("gidList") List<String> gidList);
 }

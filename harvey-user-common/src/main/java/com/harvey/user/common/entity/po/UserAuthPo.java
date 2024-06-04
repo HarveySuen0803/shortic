@@ -1,4 +1,4 @@
-package com.harvey.user.common.entity.domain;
+package com.harvey.user.common.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @TableName("t_user_auth")
-public class UserAuthDo {
+public class UserAuthPo {
     private Long id;
     
     private Long userId;

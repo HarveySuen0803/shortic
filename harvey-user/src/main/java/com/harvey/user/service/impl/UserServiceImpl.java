@@ -8,7 +8,7 @@ import com.harvey.common.exception.ClientException;
 import com.harvey.security.support.AuthenticationTokenUtil;
 import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.user.common.constant.UserResult;
-import com.harvey.user.common.entity.domain.UserDo;
+import com.harvey.user.common.entity.po.UserPo;
 import com.harvey.user.common.entity.vo.UserVo;
 import com.harvey.user.mapper.UserMapper;
 import com.harvey.user.service.*;
@@ -25,7 +25,7 @@ import java.util.Collection;
  * @Date 2024-05-22
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements UserService {
     @Resource
     private RedisTemplate redisTemplate;
     
@@ -57,16 +57,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     
     @Override
     public UserVo getUserVo(String username) {
-        UserDo userDo = lambdaQuery()
-            .select(UserDo::getUsername, UserDo::getEmail)
-            .eq(UserDo::getUsername, username)
-            .eq(UserDo::getDeletedFlag, Constant.NOT_DELETED)
+        UserPo userPo = lambdaQuery()
+            .select(UserPo::getUsername, UserPo::getEmail)
+            .eq(UserPo::getUsername, username)
+            .eq(UserPo::getDeletedFlag, Constant.NOT_DELETED)
             .one();
-        if (ObjUtil.isNull(userDo)) {
+        if (ObjUtil.isNull(userPo)) {
             throw new ClientException(UserResult.USER_NOT_FOUND);
         }
         
-        UserVo userVo = BeanUtil.copyProperties(userDo, UserVo.class);
+        UserVo userVo = BeanUtil.copyProperties(userPo, UserVo.class);
         
         return userVo;
     }
@@ -81,7 +81,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     @Override
     public boolean isUsernameExists(String username) {
         boolean isExists = lambdaQuery()
-            .eq(UserDo::getUsername, username)
+            .eq(UserPo::getUsername, username)
             .exists();
         
         return isExists;
@@ -90,7 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     @Override
     public boolean isEmailExists(String email) {
         boolean isExists = lambdaQuery()
-            .eq(UserDo::getEmail, email)
+            .eq(UserPo::getEmail, email)
             .exists();
         
         return isExists;

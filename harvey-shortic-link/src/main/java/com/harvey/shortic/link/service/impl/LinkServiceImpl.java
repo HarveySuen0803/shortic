@@ -8,7 +8,7 @@ import com.harvey.common.exception.ServerException;
 import com.harvey.common.result.link.LinkResult;
 import com.harvey.common.support.HashBase62Util;
 import com.harvey.shortic.link.common.constant.LinkConstant;
-import com.harvey.shortic.link.common.entity.domain.LinkDo;
+import com.harvey.shortic.link.common.entity.po.LinkPo;
 import com.harvey.shortic.link.common.entity.vo.LinkVo;
 import com.harvey.shortic.link.mapper.LinkMapper;
 import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
@@ -34,7 +34,7 @@ import java.util.UUID;
  */
 @Service
 @DubboService
-public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDo> implements LinkService, LinkRpcService {
+public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements LinkService, LinkRpcService {
     @Resource(name = "shortUriBloomFilter")
     private RBloomFilter shortUriBloomFilter;
     
@@ -77,7 +77,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDo> implements 
     @Override
     public boolean isShortUriExists(String shortUri) {
         boolean isExists = lambdaQuery()
-            .eq(LinkDo::getShortUri, shortUri)
+            .eq(LinkPo::getShortUri, shortUri)
             .exists();
         
         return isExists;
@@ -98,11 +98,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDo> implements 
         String shortDim = linkAddDto.getShortDim();
         String shortUrl = shortDim + shortUri;
         
-        LinkDo linkDo = BeanUtil.copyProperties(linkAddDto, LinkDo.class);
-        linkDo.setShortUri(shortUri);
-        linkDo.setShortUrl(shortUrl);
+        LinkPo linkPo = BeanUtil.copyProperties(linkAddDto, LinkPo.class);
+        linkPo.setShortUri(shortUri);
+        linkPo.setShortUrl(shortUrl);
         
-        saveOrUpdate(linkDo);
+        saveOrUpdate(linkPo);
     }
     
     @Override
@@ -111,19 +111,19 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDo> implements 
         Long pageNo = linkPageDto.getPageNo();
         Long pageSize = linkPageDto.getPageSize();
         
-        Page<LinkDo> page = new Page<>(pageNo, pageSize);
+        Page<LinkPo> page = new Page<>(pageNo, pageSize);
         
         lambdaQuery()
-            .eq(LinkDo::getGid, gid)
-            .eq(LinkDo::getIsDeleted, Constant.NOT_DELETED)
-            .eq(LinkDo::getIsEnabled, Constant.ENABLED)
+            .eq(LinkPo::getGid, gid)
+            .eq(LinkPo::getIsDeleted, Constant.NOT_DELETED)
+            .eq(LinkPo::getIsEnabled, Constant.ENABLED)
             .page(page);
         
-        List<LinkDo> linkDoList = page.getRecords();
+        List<LinkPo> linkPoList = page.getRecords();
         Long totalSize = page.getSize();
         
-        List<LinkVo> linkVoList = linkDoList.stream()
-            .map(linkDo -> BeanUtil.copyProperties(linkDo, LinkVo.class))
+        List<LinkVo> linkVoList = linkPoList.stream()
+            .map(linkPo -> BeanUtil.copyProperties(linkPo, LinkVo.class))
             .toList();
         
         LinkPageVo linkPageVo = new LinkPageVo();
@@ -135,13 +135,13 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDo> implements 
     
     @Override
     public List<LinkGroupCountVo> countLink(List<String> gidList) {
-        List<Map<String, Object>> linkDoMapList = linkMapper.countLink(gidList);
+        List<Map<String, Object>> linkPoMapList = linkMapper.countLink(gidList);
         
-        List<LinkGroupCountVo> linkGroupCountVoList = linkDoMapList.stream()
-            .map(linkDoMap -> {
+        List<LinkGroupCountVo> linkGroupCountVoList = linkPoMapList.stream()
+            .map(linkPoMap -> {
                 LinkGroupCountVo linkGroupCountVo = new LinkGroupCountVo();
-                linkGroupCountVo.setGid((String) linkDoMap.get("gid"));
-                linkGroupCountVo.setCount((Long) linkDoMap.get("gid_cnt"));
+                linkGroupCountVo.setGid((String) linkPoMap.get("gid"));
+                linkGroupCountVo.setCount((Long) linkPoMap.get("gid_cnt"));
                 return linkGroupCountVo;
             })
             .toList();

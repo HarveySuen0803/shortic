@@ -1,7 +1,7 @@
 package com.harvey.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.user.common.entity.domain.RoleDo;
+import com.harvey.user.common.entity.po.RolePo;
 import com.harvey.user.mapper.RoleMapper;
 import com.harvey.user.service.RoleService;
 import org.springframework.stereotype.Service;
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Service;
  * @Date 2024-05-22
  */
 @Service
-public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDo> implements RoleService {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, RolePo> implements RoleService {
 }
