@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  * @Date 2024-05-28
  */
 @RestController
+@PreAuthorize("hasAuthority('GROUP_R')")
 @EnableMethodSecurity
 public class GroupController {
     @Resource
@@ -53,7 +54,6 @@ public class GroupController {
         return Result.success();
     }
     
-    @PreAuthorize("hasAuthority('GROUP_R')")
     @GetMapping("/api/shortic/group/v1/list")
     public Result<List<GroupVo>> listGroup() {
         Long userId = UserContextHolder.getUserId();
