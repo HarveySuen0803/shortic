@@ -8,14 +8,12 @@ import com.harvey.common.exception.ServerException;
 import com.harvey.common.result.link.LinkResult;
 import com.harvey.common.support.HashBase62Util;
 import com.harvey.shortic.link.common.constant.LinkConstant;
-import com.harvey.shortic.link.common.entity.po.LinkPo;
-import com.harvey.shortic.link.common.entity.vo.LinkVo;
-import com.harvey.shortic.link.mapper.LinkMapper;
 import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
 import com.harvey.shortic.link.common.entity.dto.LinkPageDto;
-import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
+import com.harvey.shortic.link.common.entity.po.LinkPo;
 import com.harvey.shortic.link.common.entity.vo.LinkPageVo;
-import com.harvey.shortic.link.rpc.service.LinkRpcService;
+import com.harvey.shortic.link.common.entity.vo.LinkVo;
+import com.harvey.shortic.link.mapper.LinkMapper;
 import com.harvey.shortic.link.service.LinkService;
 import jakarta.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -34,7 +31,7 @@ import java.util.UUID;
  */
 @Service
 @DubboService
-public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements LinkService, LinkRpcService {
+public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements LinkService {
     @Resource(name = "shortUriBloomFilter")
     private RBloomFilter shortUriBloomFilter;
     
@@ -130,21 +127,5 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements 
         linkPageVo.setTotalSize(totalSize);
         
         return linkPageVo;
-    }
-    
-    @Override
-    public List<LinkGroupCountVo> countLink(List<String> gidList) {
-        List<Map<String, Object>> linkPoMapList = linkMapper.countLink(gidList);
-        
-        List<LinkGroupCountVo> linkGroupCountVoList = linkPoMapList.stream()
-            .map(linkPoMap -> {
-                LinkGroupCountVo linkGroupCountVo = new LinkGroupCountVo();
-                linkGroupCountVo.setGid((String) linkPoMap.get("gid"));
-                linkGroupCountVo.setCount((Long) linkPoMap.get("gid_cnt"));
-                return linkGroupCountVo;
-            })
-            .toList();
-        
-        return linkGroupCountVoList;
     }
 }

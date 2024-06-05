@@ -3,18 +3,21 @@ package com.harvey.shortic.group.controller;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjUtil;
 import com.harvey.common.constant.Constant;
-import com.harvey.common.result.Result;
 import com.harvey.common.exception.ClientException;
+import com.harvey.common.result.Result;
+import com.harvey.common.result.group.GroupResult;
 import com.harvey.security.support.UserContextHolder;
-import com.harvey.shortic.group.common.entity.po.GroupPo;
 import com.harvey.shortic.group.common.entity.dto.GroupAddDto;
 import com.harvey.shortic.group.common.entity.dto.GroupDeleteDto;
 import com.harvey.shortic.group.common.entity.dto.GroupSortDto;
 import com.harvey.shortic.group.common.entity.dto.GroupUpdateDto;
+import com.harvey.shortic.group.common.entity.po.GroupPo;
 import com.harvey.shortic.group.common.entity.vo.GroupVo;
-import com.harvey.common.result.group.GroupResult;
 import com.harvey.shortic.group.service.GroupService;
+import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
+import com.harvey.shortic.link.rpc.service.LinkRpcService;
 import jakarta.annotation.Resource;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,9 @@ import java.util.stream.Collectors;
 public class GroupController {
     @Resource
     private GroupService groupService;
+    
+    @DubboReference(url = "dubbo://127.0.0.1:30115", parameters = {"serialization", "fastjson2"})
+    private LinkRpcService linkRpcService;
     
     @Transactional
     @PostMapping("/api/shortic/group/v1")
@@ -63,8 +69,30 @@ public class GroupController {
             .eq(GroupPo::getDeletedFlag, Constant.NOT_DELETED)
             .list();
         
+        List<String> gidList = groupPoList.stream().map(GroupPo::getGid).toList();
+        
+        List<LinkGroupCountVo> linkGroupCountVoList = linkRpcService.countLink(gidList);
+        Map<String, Long> gidToLinkCountMap = linkGroupCountVoList.stream()
+            .collect(
+                Collectors.toMap(
+                    LinkGroupCountVo::getGid,
+                    LinkGroupCountVo::getLinkCount
+                )
+            );
+        
         List<GroupVo> groupVoList = groupPoList.stream()
-            .map(groupPo -> BeanUtil.copyProperties(groupPo, GroupVo.class))
+            .map(groupPo -> {
+                String gid = groupPo.getGid();
+                Long linkCount = gidToLinkCountMap.get(gid);
+                if (linkCount == null) {
+                    linkCount = 0L;
+                }
+                
+                GroupVo groupVo = BeanUtil.copyProperties(groupPo, GroupVo.class);
+                groupVo.setLinkCount(linkCount);
+                
+                return groupVo;
+            })
             .toList();
         
         return Result.success(groupVoList);

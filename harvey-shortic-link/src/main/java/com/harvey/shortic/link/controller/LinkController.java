@@ -40,8 +40,9 @@ public class LinkController {
     
     @PostMapping("/api/shortic/link/v1/count")
     public Result<List<LinkGroupCountVo>> countLink(@RequestBody List<String> gidList) {
-        List<LinkGroupCountVo> linkGroupCountDtoList = linkService.countLink(gidList);
+        // List<LinkGroupCountVo> linkGroupCountDtoList = linkService.countLink(gidList);
         
-        return Result.success(linkGroupCountDtoList);
+        // return Result.success(linkGroupCountDtoList);
+        return Result.success();
     }
 }

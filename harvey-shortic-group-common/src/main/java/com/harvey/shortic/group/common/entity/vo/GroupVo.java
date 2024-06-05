@@ -16,7 +16,7 @@ public class GroupVo implements Serializable {
     
     private String name;
     
-    private Long userId;
+    private Long linkCount;
     
     @Serial
     private static final long serialVersionUID = 1L;

@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class LinkGroupCountVo implements Serializable {
     private String gid;
     
-    private Long count;
+    private long linkCount;
     
     @Serial
     private static final long serialVersionUID = 1L;

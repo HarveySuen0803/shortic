@@ -28,6 +28,7 @@
             <artifactId>harvey-shortic-link-rpc</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>com.harvey</groupId>
             <artifactId>harvey-log</artifactId>
@@ -53,16 +54,10 @@
             <artifactId>harvey-cache</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>3.2.11</version>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-rpc</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

@@ -55,7 +55,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Get authorities
         Long userId = userPo.getId();
         Set<String> authNameSet = getAuthNameSet(userId);
-        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(authNameSet);
+        String[] array = authNameSet.toArray(String[]::new);
+        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(array);
         
         userDetailsDto.setAuthorities(authorities);
         
