@@ -1,5 +1,6 @@
 package com.harvey.shortic.link.rpc.service;
 
+import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
 import com.harvey.shortic.link.common.entity.dto.LinkSetDto;
 import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
 
@@ -12,6 +13,8 @@ import java.util.List;
  */
 public interface LinkRpcService {
     List<LinkGroupCountVo> countLink(List<String> gidList);
+    
+    void addLink(LinkAddDto linkAddDto);
     
     void setLink(LinkSetDto linkSetDto);
 }
