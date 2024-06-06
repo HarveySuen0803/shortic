@@ -1,10 +1,11 @@
 package com.harvey.shortic.link.controller;
 
 import com.harvey.common.result.Result;
-import com.harvey.shortic.link.common.entity.dto.LinkPageDto;
-import com.harvey.shortic.link.common.entity.vo.LinkPageVo;
 import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
+import com.harvey.shortic.link.common.entity.dto.LinkPageDto;
+import com.harvey.shortic.link.common.entity.dto.LinkSetDto;
 import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
+import com.harvey.shortic.link.common.entity.vo.LinkPageVo;
 import com.harvey.shortic.link.service.LinkService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +22,6 @@ public class LinkController {
     @Resource
     private LinkService linkService;
     
-    @PutMapping("/api/shortic/link/v1")
-    public Result<Void> addLink(@RequestBody LinkAddDto linkAddDto) {
-        linkService.addLink(linkAddDto);
-        
-        return Result.success();
-    }
-    
     @GetMapping("/api/shortic/link/v1/page")
     public Result<LinkPageVo> pageLink(@RequestParam LinkPageDto linkPageDto) {
         LinkPageVo linkPageVo = linkService.pageLink(linkPageDto);
@@ -40,5 +34,19 @@ public class LinkController {
         List<LinkGroupCountVo> linkGroupCountDtoList = linkService.countLink(gidList);
         
         return Result.success(linkGroupCountDtoList);
+    }
+    
+    @PutMapping("/api/shortic/link/v1")
+    public Result<Void> addLink(@RequestBody LinkAddDto linkAddDto) {
+        linkService.addLink(linkAddDto);
+        
+        return Result.success();
+    }
+    
+    @PostMapping("/api/shortic/link/v1")
+    public Result<Void> setLink(@RequestBody LinkSetDto linkSetDto) {
+        linkService.setLink(linkSetDto);
+        
+        return Result.success();
     }
 }

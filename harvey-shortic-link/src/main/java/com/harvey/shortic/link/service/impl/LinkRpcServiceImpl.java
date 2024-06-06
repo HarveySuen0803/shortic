@@ -1,5 +1,6 @@
 package com.harvey.shortic.link.service.impl;
 
+import com.harvey.shortic.link.common.entity.dto.LinkSetDto;
 import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
 import com.harvey.shortic.link.mapper.LinkMapper;
 import com.harvey.shortic.link.rpc.service.LinkRpcService;
@@ -24,6 +25,13 @@ public class LinkRpcServiceImpl implements LinkRpcService {
     
     @Override
     public List<LinkGroupCountVo> countLink(List<String> gidList) {
-        return linkService.countLink(gidList);
+        List<LinkGroupCountVo> linkGroupCountVoList = linkService.countLink(gidList);
+        
+        return linkGroupCountVoList;
+    }
+    
+    @Override
+    public void setLink(LinkSetDto linkSetDto) {
+        linkService.setLink(linkSetDto);
     }
 }

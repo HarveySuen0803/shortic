@@ -51,6 +51,8 @@ public class LinkPo implements Serializable {
     
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
+    
+    private Byte enabledFlag;
 
     private Byte deletedFlag;
 

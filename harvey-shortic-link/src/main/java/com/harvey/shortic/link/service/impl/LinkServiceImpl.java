@@ -1,15 +1,18 @@
 package com.harvey.shortic.link.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.constant.Constant;
+import com.harvey.common.exception.ClientException;
 import com.harvey.common.exception.ServerException;
 import com.harvey.common.result.link.LinkResult;
 import com.harvey.common.support.HashBase62Util;
 import com.harvey.shortic.link.common.constant.LinkConstant;
 import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
 import com.harvey.shortic.link.common.entity.dto.LinkPageDto;
+import com.harvey.shortic.link.common.entity.dto.LinkSetDto;
 import com.harvey.shortic.link.common.entity.po.LinkPo;
 import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
 import com.harvey.shortic.link.common.entity.vo.LinkPageVo;
@@ -85,23 +88,6 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements 
         return !isShortUriExists(shortUri);
     }
     
-    @Transactional
-    @Override
-    public void addLink(LinkAddDto linkAddDto) {
-        String longUrl = linkAddDto.getLongUrl();
-        
-        String shortUri = getShortUri(longUrl);
-        
-        String shortDim = linkAddDto.getShortDim();
-        String shortUrl = shortDim + shortUri;
-        
-        LinkPo linkPo = BeanUtil.copyProperties(linkAddDto, LinkPo.class);
-        linkPo.setShortUri(shortUri);
-        linkPo.setShortUrl(shortUrl);
-        
-        saveOrUpdate(linkPo);
-    }
-    
     @Override
     public LinkPageVo pageLink(LinkPageDto linkPageDto) {
         String gid = linkPageDto.getGid();
@@ -143,5 +129,50 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements 
             .toList();
         
         return linkGroupCountVoList;
+    }
+    
+    @Transactional
+    @Override
+    public void addLink(LinkAddDto linkAddDto) {
+        String longUrl = linkAddDto.getLongUrl();
+        
+        String shortUri = getShortUri(longUrl);
+        
+        String shortDim = linkAddDto.getShortDim();
+        String shortUrl = shortDim + shortUri;
+        
+        LinkPo linkPo = BeanUtil.copyProperties(linkAddDto, LinkPo.class);
+        linkPo.setShortUri(shortUri);
+        linkPo.setShortUrl(shortUrl);
+        
+        saveOrUpdate(linkPo);
+    }
+    
+    @Transactional
+    @Override
+    public void setLink(LinkSetDto linkSetDto) {
+        String srcGid = linkSetDto.getSrcGid();
+        String tarGid = linkSetDto.getTarGid();
+        String shortUri = linkSetDto.getShortUri();
+        
+        boolean isShortUriNotExists = isShortUriNotExists(shortUri);
+        if (isShortUriNotExists) {
+            throw new ClientException(LinkResult.SHORT_URI_NOT_EXISTS);
+        }
+        
+        LinkPo linkPo = lambdaQuery()
+            .eq(LinkPo::getShortUri, shortUri)
+            .eq(LinkPo::getGid, srcGid)
+            .eq(LinkPo::getEnabledFlag, Constant.ENABLED)
+            .eq(LinkPo::getDeletedFlag, Constant.NOT_DELETED)
+            .one();
+        if (ObjUtil.isNull(linkPo)) {
+            throw new ClientException(LinkResult.LINK_NOT_EXISTS);
+        }
+        
+        BeanUtil.copyProperties(linkSetDto, linkPo);
+        linkPo.setGid(tarGid);
+        
+        saveOrUpdate(linkPo);
     }
 }
