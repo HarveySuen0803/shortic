@@ -2,7 +2,7 @@ package com.harvey.shortic.portal.controller;
 
 import com.harvey.common.exception.ServerException;
 import com.harvey.common.result.Result;
-import com.harvey.shortic.link.rpc.service.LinkRpcService;
+import com.harvey.shortic.link.common.service.LinkRpcService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.dubbo.config.annotation.DubboReference;

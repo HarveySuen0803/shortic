@@ -1,4 +1,4 @@
-package com.harvey.shortic.link.rpc.service;
+package com.harvey.shortic.link.common.service;
 
 import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
 import com.harvey.shortic.link.common.entity.dto.LinkSetDto;

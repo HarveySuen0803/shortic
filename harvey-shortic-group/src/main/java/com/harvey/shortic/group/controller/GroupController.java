@@ -15,7 +15,7 @@ import com.harvey.shortic.group.common.entity.po.GroupPo;
 import com.harvey.shortic.group.common.entity.vo.GroupVo;
 import com.harvey.shortic.group.service.GroupService;
 import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
-import com.harvey.shortic.link.rpc.service.LinkRpcService;
+import com.harvey.shortic.link.common.service.LinkRpcService;
 import jakarta.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
