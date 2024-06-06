@@ -1,5 +1,7 @@
 package com.harvey.shortic.group.config;
 
+import com.harvey.security.service.UserContextHolder;
+import com.harvey.security.service.impl.UserContextHolderImpl;
 import com.harvey.security.support.AuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,5 +37,10 @@ public class SecurityConfig {
     @Bean
     public AuthenticationFilter authenticationFilter() {
         return new AuthenticationFilter();
+    }
+    
+    @Bean
+    public UserContextHolder userContextHolder() {
+        return new UserContextHolderImpl();
     }
 }

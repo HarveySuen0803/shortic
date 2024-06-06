@@ -29,6 +29,7 @@
         <module>harvey-shortic-portal</module>
         <module>harvey-shortic-portal-common</module>
         <module>harvey-shortic-portal-rpc</module>
+        <module>harvey-security-common</module>
     </modules>
 
     <properties>

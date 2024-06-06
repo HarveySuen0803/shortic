@@ -9,6 +9,8 @@ import com.harvey.common.support.ResponseUtil;
 import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.security.constant.SecurityConstant;
 import com.harvey.security.constant.SecurityHttpUri;
+import com.harvey.security.entity.UserContext;
+import com.harvey.security.service.UserContextHolder;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,6 +34,9 @@ import java.util.Collection;
  */
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
+    @Resource
+    private UserContextHolder userContextHolder;
+    
     @Resource
     private RedisTemplate redisTemplate;
     
@@ -72,8 +77,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         Collection<? extends GrantedAuthority> authorities = JSON.parseObject(authoritiesJson, new TypeReference<>() {});
         
         // Set user info to UserContext.
-        UserContext userContext = new UserContext(userId, username, authorities);
-        UserContextHolder.setUserContext(userContext);
+        UserContext userContext = new UserContext(userId, username);
+        userContextHolder.setUserContext(userContext);
         
         // If the access_token is inconsistent with the access_token stored in Redis,
         // notify the client to obtain a new access_token.

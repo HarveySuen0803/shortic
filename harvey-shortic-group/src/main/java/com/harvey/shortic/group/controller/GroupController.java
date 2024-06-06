@@ -6,7 +6,7 @@ import com.harvey.common.constant.Constant;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.result.Result;
 import com.harvey.common.result.group.GroupResult;
-import com.harvey.security.support.UserContextHolder;
+import com.harvey.security.service.UserContextHolder;
 import com.harvey.shortic.group.common.entity.dto.GroupAddDto;
 import com.harvey.shortic.group.common.entity.dto.GroupDeleteDto;
 import com.harvey.shortic.group.common.entity.dto.GroupSortDto;
@@ -37,6 +37,9 @@ import java.util.stream.Collectors;
 @EnableMethodSecurity
 public class GroupController {
     @Resource
+    private UserContextHolder userContextHolder;
+    
+    @Resource
     private GroupService groupService;
     
     @DubboReference(url = "dubbo://127.0.0.1:30115", parameters = {"serialization", "fastjson2"})
@@ -47,7 +50,7 @@ public class GroupController {
     public Result<Void> addGroup(@RequestBody GroupAddDto groupAddDto) {
         String name = groupAddDto.getName();
         
-        Long userId = UserContextHolder.getUserId();
+        Long userId = userContextHolder.getUserId();
         
         String gid = groupService.genUniqueGid(userId);
 
@@ -62,7 +65,7 @@ public class GroupController {
     
     @GetMapping("/api/shortic/group/v1/list")
     public Result<List<GroupVo>> listGroup() {
-        Long userId = UserContextHolder.getUserId();
+        Long userId = userContextHolder.getUserId();
         
         List<GroupPo> groupPoList = groupService.lambdaQuery()
             .eq(GroupPo::getUserId, userId)
@@ -101,7 +104,7 @@ public class GroupController {
     @Transactional
     @PutMapping("/api/shortic/group/v1")
     public Result<Void> updateGroup(@RequestBody GroupUpdateDto groupUpdateDto) {
-        Long userId = UserContextHolder.getUserId();
+        Long userId = userContextHolder.getUserId();
         String gid = groupUpdateDto.getGid();
         String name = groupUpdateDto.getName();
         
@@ -125,7 +128,7 @@ public class GroupController {
     @DeleteMapping("/api/shortic/group/v1")
     public Result<Void> deleteGroup(@RequestBody GroupDeleteDto groupDeleteDto) {
         String gid = groupDeleteDto.getGid();
-        Long userId = UserContextHolder.getUserId();
+        Long userId = userContextHolder.getUserId();
         
         GroupPo groupPo = groupService.lambdaQuery()
             .eq(GroupPo::getGid, gid)
@@ -146,7 +149,7 @@ public class GroupController {
     @Transactional
     @PostMapping("/api/shortic/group/v1/sort")
     public Result<Void> sortGroup(@RequestBody List<GroupSortDto> groupSortDtoList) {
-        Long userId = UserContextHolder.getUserId();
+        Long userId = userContextHolder.getUserId();
         
         List<String> gidList = groupSortDtoList.stream()
             .map(GroupSortDto::getGid)

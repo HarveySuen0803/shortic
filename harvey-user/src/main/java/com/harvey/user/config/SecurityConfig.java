@@ -1,5 +1,7 @@
 package com.harvey.user.config;
 
+import com.harvey.security.service.UserContextHolder;
+import com.harvey.security.service.impl.UserContextHolderImpl;
 import com.harvey.security.support.AuthenticationFilter;
 import com.harvey.security.constant.SecurityHttpUri;
 import lombok.extern.slf4j.Slf4j;
@@ -87,5 +89,10 @@ public class SecurityConfig {
     @Bean
     public AuthenticationFilter authenticationFilter() {
         return new AuthenticationFilter();
+    }
+    
+    @Bean
+    public UserContextHolder userContextHolder() {
+        return new UserContextHolderImpl();
     }
 }

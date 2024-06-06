@@ -1,11 +1,8 @@
-package com.harvey.security.support;
+package com.harvey.security.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 /**
  * @Author harvey
@@ -19,6 +16,4 @@ public class UserContext {
     private Long userId;
     
     private String username;
-    
-    private Collection<? extends GrantedAuthority> authorities;
 }
