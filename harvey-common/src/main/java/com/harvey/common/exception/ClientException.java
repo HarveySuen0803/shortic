@@ -8,6 +8,10 @@ import com.harvey.common.result.Result;
  * @Date 2024-05-22
  */
 public class ClientException extends BaseException {
+    public ClientException(Exception e) {
+        super(e);
+    }
+    
     public ClientException(int code, String message) {
         super(code, message);
     }

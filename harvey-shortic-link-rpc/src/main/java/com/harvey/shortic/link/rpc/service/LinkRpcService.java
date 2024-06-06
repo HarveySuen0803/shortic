@@ -12,6 +12,8 @@ import java.util.List;
  * @Date 2024-05-31
  */
 public interface LinkRpcService {
+    String getLongUrl(String shortUri);
+    
     List<LinkGroupCountVo> countLink(List<String> gidList);
     
     void addLink(LinkAddDto linkAddDto);

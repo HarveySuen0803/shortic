@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
  * @Date 2024-05-30
  */
 @Data
-@NoArgsConstructor
 public class LinkPageDto {
     private String gid;
     
@@ -21,19 +20,24 @@ public class LinkPageDto {
     
     private Long pageSize;
     
-    public LinkPageDto(String gid, Long pageNo, Long pageSize) {
+    public void setGid(String gid) {
         if (StrUtil.isBlank(gid)) {
             throw new ClientException(LinkResult.GID_INVALID);
         }
+        this.gid = gid;
+    }
+    
+    public void setPageNo(Long pageNo) {
         if (pageNo == null || pageNo < 0) {
             pageNo = Constant.PAGE_NO;
         }
+        this.pageNo = pageNo;
+    }
+    
+    public void setPageSize(Long pageSize) {
         if (pageSize == null) {
             pageSize = Constant.PAGE_SIZE;
         }
-        
-        this.gid = gid;
-        this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
 }

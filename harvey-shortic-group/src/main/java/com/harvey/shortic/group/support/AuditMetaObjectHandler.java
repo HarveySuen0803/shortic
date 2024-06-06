@@ -1,4 +1,4 @@
-package com.harvey.database.support;
+package com.harvey.shortic.group.support;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.harvey.security.support.UserContextHolder;
@@ -6,11 +6,6 @@ import org.apache.ibatis.reflection.MetaObject;
 
 import java.time.LocalDateTime;
 
-/**
- * @Author harvey
- * @Email harveysuen0803@gmail.com
- * @Date 2024-05-27
- */
 public class AuditMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class LinkAddDto implements Serializable {
     private String gid;
     
-    private String shortDim;
+    private String shortDom;
     
     private String longUrl;
     
@@ -33,22 +33,24 @@ public class LinkAddDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     
-    public LinkAddDto(String gid, String shortDim, String longUrl, String description, Byte expireType, LocalDateTime expireTime) {
+    public void setGid(String gid) {
         if (StrUtil.isBlank(gid)) {
             throw new ClientException(LinkResult.GID_INVALID);
         }
-        if (StrUtil.isBlank(shortDim)) {
-            throw new ClientException(LinkResult.SHORT_DIM_INVALID);
+        this.gid = gid;
+    }
+    
+    public void setShortDom(String shortDom) {
+        if (StrUtil.isBlank(shortDom)) {
+            throw new ClientException(LinkResult.SHORT_DOM_INVALID);
         }
+        this.shortDom = shortDom;
+    }
+    
+    public void setLongUrl(String longUrl) {
         if (StrUtil.isBlank(longUrl)) {
             throw new ClientException(LinkResult.LONG_URL_INVALID);
         }
-        
-        this.gid = gid;
-        this.shortDim = shortDim;
         this.longUrl = longUrl;
-        this.description = description;
-        this.expireType = expireType;
-        this.expireTime = expireTime;
     }
 }

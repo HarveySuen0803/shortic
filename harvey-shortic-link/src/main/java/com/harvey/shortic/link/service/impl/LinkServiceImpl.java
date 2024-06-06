@@ -2,11 +2,13 @@ package com.harvey.shortic.link.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.constant.Constant;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.exception.ServerException;
+import com.harvey.common.result.Result;
 import com.harvey.common.result.link.LinkResult;
 import com.harvey.common.support.HashBase62Util;
 import com.harvey.shortic.link.common.constant.LinkConstant;
@@ -17,13 +19,19 @@ import com.harvey.shortic.link.common.entity.po.LinkPo;
 import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
 import com.harvey.shortic.link.common.entity.vo.LinkPageVo;
 import com.harvey.shortic.link.common.entity.vo.LinkVo;
+import com.harvey.shortic.link.config.BloomFilterConfig;
 import com.harvey.shortic.link.mapper.LinkMapper;
 import com.harvey.shortic.link.service.LinkService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import org.redisson.api.RBloomFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -40,6 +48,31 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements 
     
     @Resource
     private LinkMapper linkMapper;
+    
+    @Resource
+    private HttpServletResponse response;
+    
+    @Override
+    public String getLongUrl(String shortUri) {
+        if (StrUtil.isBlank(shortUri)) {
+            throw new ClientException(LinkResult.SHORT_URL_INVALID);
+        }
+        
+        if (!shortUriBloomFilter.contains(shortUri)) {
+            throw new ClientException(LinkResult.SHORT_URI_NOT_EXISTS);
+        }
+        
+        LinkPo linkPo = lambdaQuery()
+            .eq(LinkPo::getShortUri, shortUri)
+            .one();
+        if (linkPo == null) {
+            throw new ClientException(LinkResult.SHORT_URI_NOT_EXISTS);
+        }
+        
+        String longUrl = linkPo.getLongUrl();
+        
+        return longUrl;
+    }
     
     @Override
     public String getShortUri(String longUrl) {
@@ -138,8 +171,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements 
         
         String shortUri = getShortUri(longUrl);
         
-        String shortDim = linkAddDto.getShortDim();
-        String shortUrl = shortDim + shortUri;
+        String shortDom = linkAddDto.getShortDom();
+        String shortUrl = shortDom + shortUri;
         
         LinkPo linkPo = BeanUtil.copyProperties(linkAddDto, LinkPo.class);
         linkPo.setShortUri(shortUri);
@@ -159,6 +192,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements 
         if (isShortUriNotExists) {
             throw new ClientException(LinkResult.SHORT_URI_NOT_EXISTS);
         }
+        
+        shortUriBloomFilter.add(shortUri);
         
         LinkPo linkPo = lambdaQuery()
             .eq(LinkPo::getShortUri, shortUri)

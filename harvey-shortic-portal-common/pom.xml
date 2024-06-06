@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>harvey-shortic-link-common</artifactId>
+    <artifactId>harvey-shortic-portal-common</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

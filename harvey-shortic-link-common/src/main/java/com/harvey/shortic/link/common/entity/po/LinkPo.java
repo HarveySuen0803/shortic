@@ -23,7 +23,7 @@ public class LinkPo implements Serializable {
 
     private Long clickCount;
 
-    private String shortDim;
+    private String shortDom;
 
     private String shortUri;
 

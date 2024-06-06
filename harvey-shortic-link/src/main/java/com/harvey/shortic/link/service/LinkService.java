@@ -7,6 +7,7 @@ import com.harvey.shortic.link.common.entity.dto.LinkSetDto;
 import com.harvey.shortic.link.common.entity.po.LinkPo;
 import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
 import com.harvey.shortic.link.common.entity.vo.LinkPageVo;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ import java.util.List;
  * @Date 2024-05-29
  */
 public interface LinkService extends IService<LinkPo> {
+    String getLongUrl(String shortUri);
+    
     LinkPageVo pageLink(LinkPageDto linkPageDto);
     
     String getShortUri(String longUrl);

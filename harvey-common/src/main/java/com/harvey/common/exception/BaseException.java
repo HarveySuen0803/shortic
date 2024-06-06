@@ -15,6 +15,12 @@ public class BaseException extends RuntimeException {
     private final int code;
     
     private final String message;
+    
+    public BaseException(Exception e) {
+        super(e.getMessage(), e.getCause());
+        this.code = Result.FAILURE.getCode();
+        this.message = Result.FAILURE.getMessage();
+    }
 
     public BaseException(int code, String message) {
         super(message, null);

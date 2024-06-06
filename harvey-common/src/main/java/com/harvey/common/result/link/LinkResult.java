@@ -10,7 +10,7 @@ import com.harvey.common.result.Result;
 public class LinkResult extends Result {
     public static final Result GID_INVALID = new Result(3101, "gid is invalid");
     
-    public static final Result SHORT_DIM_INVALID = new Result(3102, "shortDim is invalid");
+    public static final Result SHORT_DOM_INVALID = new Result(3102, "shortDom is invalid");
     
     public static final Result SHORT_URI_INVALID = new Result(3103, "shortUri is invalid");
     

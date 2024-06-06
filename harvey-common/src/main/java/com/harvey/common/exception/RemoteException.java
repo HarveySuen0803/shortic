@@ -8,6 +8,10 @@ import com.harvey.common.result.Result;
  * @Date 2024-05-22
  */
 public class RemoteException extends BaseException {
+    public RemoteException(Exception e) {
+        super(e);
+    }
+    
     public RemoteException(int code, String message) {
         super(code, message);
     }
