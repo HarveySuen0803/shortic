@@ -25,5 +25,5 @@ public interface LinkService extends IService<LinkPo> {
     
     boolean isShortUriNotExists(String shortUri);
     
-    // List<LinkGroupCountVo> countLink(List<String> gidList);
+    List<LinkGroupCountVo> countLink(List<String> gidList);
 }

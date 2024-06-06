@@ -7,10 +7,7 @@ import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
 import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
 import com.harvey.shortic.link.service.LinkService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,18 +28,17 @@ public class LinkController {
         return Result.success();
     }
     
-    @PostMapping("/api/shortic/link/v1/page")
-    public Result<LinkPageVo> pageLink(@RequestBody LinkPageDto linkPageDto) {
+    @GetMapping("/api/shortic/link/v1/page")
+    public Result<LinkPageVo> pageLink(@RequestParam LinkPageDto linkPageDto) {
         LinkPageVo linkPageVo = linkService.pageLink(linkPageDto);
         
         return Result.success(linkPageVo);
     }
     
-    @PostMapping("/api/shortic/link/v1/count")
-    public Result<List<LinkGroupCountVo>> countLink(@RequestBody List<String> gidList) {
-        // List<LinkGroupCountVo> linkGroupCountDtoList = linkService.countLink(gidList);
+    @GetMapping("/api/shortic/link/v1/count")
+    public Result<List<LinkGroupCountVo>> countLink(@RequestParam List<String> gidList) {
+        List<LinkGroupCountVo> linkGroupCountDtoList = linkService.countLink(gidList);
         
-        // return Result.success(linkGroupCountDtoList);
-        return Result.success();
+        return Result.success(linkGroupCountDtoList);
     }
 }
