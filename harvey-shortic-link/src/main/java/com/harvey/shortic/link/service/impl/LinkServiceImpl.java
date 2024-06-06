@@ -172,7 +172,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkPo> implements 
         String shortUri = getShortUri(longUrl);
         
         String shortDom = linkAddDto.getShortDom();
-        String shortUrl = shortDom + shortUri;
+        String shortUrl = shortDom + "/" + shortUri;
         
         LinkPo linkPo = BeanUtil.copyProperties(linkAddDto, LinkPo.class);
         linkPo.setShortUri(shortUri);
