@@ -88,3 +88,16 @@ docker container run \
     -v shortic-redis-logs:/var/log/redis.log \
     -d redis:7.2 redis-server /etc/redis/redis.conf
 ```
+
+After starting the project, accessing `http://127.0.0.1:20112/nUGqew` stored in the database will automatically redirect to `http://www.harveysuen.com`.
+
+# Background Management
+
+Access through the default administrator user.
+
+```
+POST http://127.0.0.1:20113/api/security/v1/login
+Content-Type: application/x-www-form-urlencoded
+
+username=harvey&password=111
+```
