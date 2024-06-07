@@ -47,6 +47,7 @@ public class GroupController {
     
     @Transactional
     @PostMapping("/api/shortic/group/v1")
+    @PreAuthorize("hasAuthority('GROUP_W')")
     public Result<Void> addGroup(@RequestBody GroupAddDto groupAddDto) {
         String name = groupAddDto.getName();
         
@@ -103,6 +104,7 @@ public class GroupController {
     
     @Transactional
     @PutMapping("/api/shortic/group/v1")
+    @PreAuthorize("hasAuthority('GROUP_W')")
     public Result<Void> updateGroup(@RequestBody GroupUpdateDto groupUpdateDto) {
         Long userId = userContextHolder.getUserId();
         String gid = groupUpdateDto.getGid();
@@ -126,6 +128,7 @@ public class GroupController {
     
     @Transactional
     @DeleteMapping("/api/shortic/group/v1")
+    @PreAuthorize("hasAuthority('GROUP_W')")
     public Result<Void> deleteGroup(@RequestBody GroupDeleteDto groupDeleteDto) {
         String gid = groupDeleteDto.getGid();
         Long userId = userContextHolder.getUserId();
@@ -148,6 +151,7 @@ public class GroupController {
     
     @Transactional
     @PostMapping("/api/shortic/group/v1/sort")
+    @PreAuthorize("hasAuthority('GROUP_W')")
     public Result<Void> sortGroup(@RequestBody List<GroupSortDto> groupSortDtoList) {
         Long userId = userContextHolder.getUserId();
         
