@@ -1,7 +1,7 @@
 package com.harvey.common.support;
 
 import com.alibaba.fastjson2.JSON;
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 

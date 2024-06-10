@@ -1,7 +1,7 @@
 package com.harvey.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.harvey.user.common.entity.po.RoleAuthPo;
+import com.harvey.user.common.model.po.RoleAuthPo;
 
 /**
  * @Author harvey

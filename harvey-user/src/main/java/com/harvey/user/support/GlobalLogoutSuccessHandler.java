@@ -2,7 +2,7 @@ package com.harvey.user.support;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWT;
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import com.harvey.common.support.ResponseUtil;
 import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.security.constant.SecurityConstant;

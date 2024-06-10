@@ -1,8 +1,8 @@
 package com.harvey.shortic.link.common.service;
 
-import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
-import com.harvey.shortic.link.common.entity.dto.LinkSetDto;
-import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
+import com.harvey.shortic.link.common.model.dto.LinkAddDto;
+import com.harvey.shortic.link.common.model.dto.LinkSetDto;
+import com.harvey.shortic.link.common.model.vo.LinkGroupCountVo;
 
 import java.util.List;
 

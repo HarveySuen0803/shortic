@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWT;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import com.harvey.common.support.ResponseUtil;
 import com.harvey.security.constant.SecurityCacheKey;
 import com.harvey.security.constant.SecurityConstant;

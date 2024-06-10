@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.harvey.common.exception.ClientException;
 import com.harvey.security.entity.dto.UserDetailsDto;
 import com.harvey.user.common.constant.UserResult;
-import com.harvey.user.common.entity.po.*;
+import com.harvey.user.common.model.po.*;
 import com.harvey.user.service.*;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,6 +1,6 @@
 package com.harvey.shortic.link.mapper;
 
-import com.harvey.shortic.link.common.entity.po.LinkPo;
+import com.harvey.shortic.link.common.model.po.LinkPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;

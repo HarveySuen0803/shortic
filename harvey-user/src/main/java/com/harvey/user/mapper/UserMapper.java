@@ -1,6 +1,6 @@
 package com.harvey.user.mapper;
 
-import com.harvey.user.common.entity.po.UserPo;
+import com.harvey.user.common.model.po.UserPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

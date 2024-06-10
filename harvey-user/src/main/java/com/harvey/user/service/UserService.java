@@ -1,8 +1,8 @@
 package com.harvey.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.harvey.user.common.entity.po.UserPo;
-import com.harvey.user.common.entity.vo.UserVo;
+import com.harvey.user.common.model.po.UserPo;
+import com.harvey.user.common.model.vo.UserVo;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;

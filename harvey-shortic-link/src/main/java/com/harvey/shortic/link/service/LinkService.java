@@ -1,13 +1,12 @@
 package com.harvey.shortic.link.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.harvey.shortic.link.common.entity.dto.LinkAddDto;
-import com.harvey.shortic.link.common.entity.dto.LinkPageDto;
-import com.harvey.shortic.link.common.entity.dto.LinkSetDto;
-import com.harvey.shortic.link.common.entity.po.LinkPo;
-import com.harvey.shortic.link.common.entity.vo.LinkGroupCountVo;
-import com.harvey.shortic.link.common.entity.vo.LinkPageVo;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.harvey.shortic.link.common.model.dto.LinkAddDto;
+import com.harvey.shortic.link.common.model.dto.LinkPageDto;
+import com.harvey.shortic.link.common.model.dto.LinkSetDto;
+import com.harvey.shortic.link.common.model.po.LinkPo;
+import com.harvey.shortic.link.common.model.vo.LinkGroupCountVo;
+import com.harvey.shortic.link.common.model.vo.LinkPageVo;
 
 import java.util.List;
 

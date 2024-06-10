@@ -5,7 +5,7 @@ import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.harvey.common.exception.ExceptionFactory;
 import com.harvey.common.exception.ExceptionType;
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 
 import java.util.Collection;
 

@@ -1,7 +1,7 @@
 package com.harvey.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.user.common.entity.po.RoleAuthPo;
+import com.harvey.user.common.model.po.RoleAuthPo;
 import com.harvey.user.mapper.RoleAuthMapper;
 import com.harvey.user.service.RoleAuthService;
 import org.springframework.stereotype.Service;

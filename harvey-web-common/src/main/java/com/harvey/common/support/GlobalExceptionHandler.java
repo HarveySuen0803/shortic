@@ -1,6 +1,6 @@
 package com.harvey.common.support;
 
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import com.harvey.common.exception.BaseException;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.exception.RemoteException;

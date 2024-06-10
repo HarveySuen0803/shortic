@@ -1,7 +1,7 @@
 package com.harvey.common.exception;
 
 import cn.hutool.core.util.ObjUtil;
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 
 /**
  * @Author harvey

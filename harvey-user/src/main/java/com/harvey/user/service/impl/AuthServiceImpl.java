@@ -1,7 +1,7 @@
 package com.harvey.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.user.common.entity.po.AuthPo;
+import com.harvey.user.common.model.po.AuthPo;
 import com.harvey.user.mapper.AuthMapper;
 import com.harvey.user.service.AuthService;
 import org.springframework.stereotype.Service;

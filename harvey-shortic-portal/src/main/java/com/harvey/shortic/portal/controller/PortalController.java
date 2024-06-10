@@ -1,7 +1,7 @@
 package com.harvey.shortic.portal.controller;
 
 import com.harvey.common.exception.ServerException;
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import com.harvey.shortic.link.common.service.LinkRpcService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;

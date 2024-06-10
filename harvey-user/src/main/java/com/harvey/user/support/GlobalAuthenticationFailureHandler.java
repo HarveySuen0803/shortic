@@ -1,6 +1,6 @@
 package com.harvey.user.support;
 
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import com.harvey.common.support.ResponseUtil;
 import com.harvey.log.support.ExceptionLogger;
 import jakarta.servlet.ServletException;

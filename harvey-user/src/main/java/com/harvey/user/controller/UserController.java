@@ -1,7 +1,7 @@
 package com.harvey.user.controller;
 
-import com.harvey.common.result.Result;
-import com.harvey.user.common.entity.vo.UserVo;
+import com.harvey.common.constant.Result;
+import com.harvey.user.common.model.vo.UserVo;
 import com.harvey.user.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;

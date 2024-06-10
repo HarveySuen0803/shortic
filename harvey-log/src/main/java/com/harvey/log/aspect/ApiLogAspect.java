@@ -4,7 +4,7 @@ import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.harvey.common.exception.ServerException;
-import com.harvey.common.result.Result;
+import com.harvey.common.constant.Result;
 import com.harvey.log.anno.ApiLog;
 import com.harvey.log.constant.ApiLogConstant;
 import jakarta.annotation.Resource;
