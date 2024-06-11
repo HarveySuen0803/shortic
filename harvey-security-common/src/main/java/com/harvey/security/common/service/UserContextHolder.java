@@ -1,6 +1,6 @@
-package com.harvey.security.service;
+package com.harvey.security.common.service;
 
-import com.harvey.security.entity.UserContext;
+import com.harvey.security.common.model.vo.UserContext;
 
 /**
  * @Author harvey

@@ -1,6 +1,6 @@
 package com.harvey.shortic.link.config;
 
-import com.harvey.security.service.UserContextHolder;
+import com.harvey.security.common.service.UserContextHolder;
 import com.harvey.security.service.impl.UserContextHolderImpl;
 import com.harvey.security.support.AuthenticationFilter;
 import org.springframework.context.annotation.Bean;

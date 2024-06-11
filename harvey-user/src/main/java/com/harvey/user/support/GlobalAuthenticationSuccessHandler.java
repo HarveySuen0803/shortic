@@ -2,9 +2,9 @@ package com.harvey.user.support;
 
 import com.harvey.common.constant.Result;
 import com.harvey.common.support.ResponseUtil;
-import com.harvey.security.entity.dto.UserDetailsDto;
+import com.harvey.security.model.dto.UserDetailsDto;
 import com.harvey.security.support.AuthenticationTokenUtil;
-import com.harvey.security.constant.SecurityCacheKey;
+import com.harvey.security.common.constant.SecurityCacheKey;
 import com.harvey.user.common.model.vo.LoginVo;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;

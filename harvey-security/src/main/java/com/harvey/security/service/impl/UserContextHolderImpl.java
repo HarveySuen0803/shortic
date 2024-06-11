@@ -1,7 +1,7 @@
 package com.harvey.security.service.impl;
 
-import com.harvey.security.entity.UserContext;
-import com.harvey.security.service.UserContextHolder;
+import com.harvey.security.common.model.vo.UserContext;
+import com.harvey.security.common.service.UserContextHolder;
 
 /**
  * @Author harvey

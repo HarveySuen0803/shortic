@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.constant.Constant;
 import com.harvey.common.exception.ClientException;
 import com.harvey.security.support.AuthenticationTokenUtil;
-import com.harvey.security.constant.SecurityCacheKey;
+import com.harvey.security.common.constant.SecurityCacheKey;
 import com.harvey.user.common.constant.UserResult;
 import com.harvey.user.common.model.po.UserPo;
 import com.harvey.user.common.model.vo.UserVo;

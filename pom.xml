@@ -11,7 +11,6 @@
 
     <modules>
         <module>harvey-common</module>
-        <module>harvey-web-common</module>
         <module>harvey-user</module>
         <module>harvey-user-common</module>
         <module>harvey-shortic-link</module>

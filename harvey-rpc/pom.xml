@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.harvey</groupId>
-            <artifactId>harvey-web-common</artifactId>
+            <artifactId>harvey-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

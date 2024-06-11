@@ -6,7 +6,7 @@ import com.harvey.common.constant.Constant;
 import com.harvey.common.exception.ClientException;
 import com.harvey.common.constant.Result;
 import com.harvey.shortic.group.common.constant.GroupResult;
-import com.harvey.security.service.UserContextHolder;
+import com.harvey.security.common.service.UserContextHolder;
 import com.harvey.shortic.group.common.model.dto.GroupAddDto;
 import com.harvey.shortic.group.common.model.dto.GroupDeleteDto;
 import com.harvey.shortic.group.common.model.dto.GroupSortDto;

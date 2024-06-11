@@ -1,7 +1,7 @@
 package com.harvey.database.support;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.harvey.security.service.UserContextHolder;
+import com.harvey.security.common.service.UserContextHolder;
 import jakarta.annotation.Resource;
 import org.apache.ibatis.reflection.MetaObject;
 

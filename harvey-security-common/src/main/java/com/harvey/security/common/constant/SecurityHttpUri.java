@@ -1,4 +1,4 @@
-package com.harvey.security.constant;
+package com.harvey.security.common.constant;
 
 import com.harvey.common.constant.HttpUri;
 

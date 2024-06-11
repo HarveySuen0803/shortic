@@ -1,7 +1,6 @@
-package com.harvey.security.entity.dto;
+package com.harvey.security.model.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,25 +38,21 @@ public class UserDetailsDto implements UserDetails {
     private static final long serialVersionUID = 1L;
     
     @Override
-    @JsonIgnore
     public boolean isAccountNonExpired() {
         return accountExpiredFlag == 0;
     }
     
     @Override
-    @JsonIgnore
     public boolean isAccountNonLocked() {
         return accountLockedFlag == 0;
     }
     
     @Override
-    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return credentialsExpiredFlag == 0;
     }
     
     @Override
-    @JsonIgnore
     public boolean isEnabled() {
         return deletedFlag == 0;
     }

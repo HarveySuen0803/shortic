@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
 import com.alibaba.fastjson2.JSON;
-import com.harvey.security.constant.SecurityConstant;
+import com.harvey.security.common.constant.SecurityConstant;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
